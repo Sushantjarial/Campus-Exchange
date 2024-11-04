@@ -5,6 +5,7 @@ import {Routes,Router, Route, BrowserRouter} from "react-router-dom"
 import Landing from './assets/pages/landing.jsx'
 import { Signin } from './assets/pages/signin.jsx'
 import { Signup } from './assets/pages/signup.jsx'
+import  HomePage from './assets/pages/home.jsx'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -21,7 +22,7 @@ function App2(){
         <Route path='/' element={<Landing/>}></Route>
         <Route path='/signin' element={<Signin/>}></Route>
         <Route path='/signup' element={<Signup/>}></Route>
-        <Route path='/home' element={<Landing/>}></Route>
+        <Route path='/home' element={<HomePage/>}></Route>
         
       </Routes>
     </div>
