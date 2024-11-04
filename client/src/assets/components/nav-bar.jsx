@@ -33,7 +33,7 @@ export default function NavBar() {
         </div>
 
         <div className="hidden md:flex space-x-4">
-          <button onClick={() => navigate("/signin")} className="text-base md:text-lg  rounded-xl font-poppins text-gray-800 dark:text-gray-200 px-3 py-1 hover:bg-blue-700 dark:hover:bg-blue-600 transform hover:scale-105">
+          <button onClick={() => navigate("/home")} className="text-base md:text-lg  rounded-xl font-poppins text-gray-800 dark:text-gray-200 px-3 py-1 hover:bg-blue-700 dark:hover:bg-blue-600 transform hover:scale-105">
             Home
           </button>
           <button onClick={handleScrollToAbout} className="text-base md:text-lg rounded-xl font-poppins text-gray-800 dark:text-gray-200 px-3 py-1 hover:bg-blue-700 dark:hover:bg-blue-600 transform hover:scale-105">
