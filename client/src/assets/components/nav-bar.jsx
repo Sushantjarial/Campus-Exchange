@@ -1,7 +1,7 @@
 // src/components/NavBar.js
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import logo from './../logo2.png'; // Adjust the path if needed
+import logo from './../images/logo2.png'; // Adjust the path if needed
 
 export default function NavBar() {
   const navigate = useNavigate();
