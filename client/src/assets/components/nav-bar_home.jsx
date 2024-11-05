@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import logo from './../images/logo2.png'; // Adjust the path if needed
 import profileIcon from './../images/profile.png'; // Importing a custom profile icon image
 
@@ -8,17 +8,34 @@ export default function NavBarHome() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [profileMenuOpen, setProfileMenuOpen] = useState(false); // For profile dropdown menu
     const [searchQuery, setSearchQuery] = useState("");
+    const profileMenuRef = useRef(null); // Create a ref for the profile menu
 
     const handleSearch = (e) => {
         e.preventDefault();
         console.log("Search query:", searchQuery);
     };
 
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+                setProfileMenuOpen(false);
+            }
+        };
+
+        // Attach the event listener
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            // Cleanup the event listener
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     return (
         <>
             <div className="flex justify-between items-center bg-gray-300 dark:bg-gray-800 p-3 shadow-lg border-b border-gray-400 dark:border-gray-700">
                 {/* Logo and Title */}
-                <div className="flex items-center space-x-3">
+                <div onClick={() => navigate("/")} className="flex items-center space-x-3">
                     <img src={logo} className="w-8 h-8 sm:w-10 sm:h-10 mx-2" alt="Logo" />
                     <div className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 dark:text-gray-200">
                         Campus Exchange
@@ -45,7 +62,7 @@ export default function NavBarHome() {
                 </form>
 
                 {/* Profile Icon and Dropdown */}
-                <div className="relative text-gray-800 dark:text-gray-200 ml-4">
+                <div className="relative text-gray-800 dark:text-gray-200 ml-4" ref={profileMenuRef}>
                     <button
                         onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                         className="focus:outline-none"
