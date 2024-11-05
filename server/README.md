@@ -1,1 +1,8 @@
-# Campus-Exchange
+```
+npm install
+npm run dev
+```
+
+```
+npm run deploy
+```
