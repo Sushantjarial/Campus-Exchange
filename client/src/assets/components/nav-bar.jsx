@@ -46,7 +46,7 @@ export default function NavBar() {
       </div>
 
       <div className={`md:hidden ${menuOpen ? "block" : "hidden"} bg-gray-300 dark:bg-gray-800`}>
-        <button onClick={() => navigate("/signin")} className="block w-full text-left px-4 py-3 text-gray-800 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">
+        <button onClick={() => navigate("/home")} className="block w-full text-left px-4 py-3 text-gray-800 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">
           Home
         </button>
         <button onClick={handleScrollToAbout} className="block w-full text-left px-4 py-3 text-gray-800 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">
