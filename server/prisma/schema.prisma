@@ -27,6 +27,7 @@ model Product {
   name        String
   description String
   category    String
+  contactInformation String
   userId      String? // Foreign key to User
   user        User?   @relation(fields: [userId], references: [id])
   images      Image[] // One-to-many relationship with Image

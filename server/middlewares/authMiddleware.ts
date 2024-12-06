@@ -1,11 +1,7 @@
 import { createMiddleware } from "hono/factory";
 import { verify } from "hono/jwt";
-import { Bindings, Variables } from "../src/index";
-
-export const authMiddleware = createMiddleware<{
-  Bindings: Bindings;
-  Variables: Variables;
-}>(async (c, next) => {
+import { E } from "../src";
+export const authMiddleware = createMiddleware<E>(async (c, next) => {
   const jwt = c.req.header("Authorization");
   if (!jwt) {
     c.status(400);
@@ -18,6 +14,7 @@ export const authMiddleware = createMiddleware<{
     const user = await verify(token, c.env.SECRET);
     const userId = String(user.id);
     c.set("userId", userId);
+    c.set("categories",["books","electronics","cycles","others"])
     await next();
   } catch (error) {
     c.status(401);
