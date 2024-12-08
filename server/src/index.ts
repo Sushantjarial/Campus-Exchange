@@ -1,12 +1,13 @@
-import { PrismaClient } from "@prisma/client";
-import { withAccelerate } from "@prisma/extension-accelerate";
+
+import { PrismaClient } from '@prisma/client/edge'
+import { withAccelerate } from '@prisma/extension-accelerate'
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { prismaMiddleware } from "../middlewares/prismaMiddleware";
 import { authMiddleware } from "../middlewares/authMiddleware";
 import { userRouter } from "../routes/user";
 import { productRouter } from "../routes/product";
-import { string } from "zod";
+
 const prismaExtended = new PrismaClient().$extends(withAccelerate());
 type ExtendedPrismaClient = typeof prismaExtended;
 
@@ -30,8 +31,8 @@ export interface E {
  const app=new Hono<E>();
 
 app.use("/*",cors());
-app.use("*",prismaMiddleware)
-app.use("/api/v1/product",authMiddleware)
+app.use("/*",prismaMiddleware)
+app.use("/api/v1/*",authMiddleware)
 
 app.route("api/v1/user",userRouter)
 app.route("api/v1/products",productRouter)

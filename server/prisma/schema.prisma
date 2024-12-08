@@ -19,7 +19,7 @@ model User {
   lastName  String
   email     String    @unique
   password  String
-  products  Product[] // One-to-many relationship with Product
+  products Product[] // One-to-many relationship with Product
 }
 
 model Product {

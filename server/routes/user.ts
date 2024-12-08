@@ -25,7 +25,7 @@ userRouter.post("/signup",async(c)=>{
         }
     })
     const id=user.id
-    const token = sign({
+    const token = await sign({
         id
     },c.env.SECRET)
     return c.json({
@@ -37,7 +37,7 @@ userRouter.post("/signup",async(c)=>{
     catch(e){
         c.status(403)
         return c.json({
-            error:"error while signing up"
+            error:e
         })
     }
 
@@ -47,11 +47,11 @@ userRouter.post("/signup",async(c)=>{
 userRouter.post("/signin",async(c)=>{
     const body=await c.req.json()
     const prisma=c.get("prisma")
-    const {success,error}=signinInput.safeParse("body")
+    const {success,error}=signinInput.safeParse(body)
     if(!success){
         c.status(403)
         return c.json({
-            error:error.issues
+            error:error
         })
     }
     try{
@@ -67,7 +67,7 @@ userRouter.post("/signin",async(c)=>{
             error:"incorrect login credentials"
         })
     }
-    const token=sign({
+    const token=await sign({
         id:user.id
     },c.env.SECRET)
 
@@ -78,7 +78,7 @@ userRouter.post("/signin",async(c)=>{
     }
     catch(e){
         return c.json({
-            error:"error while signing up"
+            error: e
         })
     }
 })
