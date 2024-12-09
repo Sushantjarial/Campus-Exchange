@@ -18,10 +18,8 @@ productRouter.get("/",async(c)=>{
     }
     try{
         
-        const products=prisma.product.findMany({
-            select:{
+        const products=await prisma.product.findMany({
             
-            },
             where: category ? { category } : {}
         })
         return c.json({
@@ -88,4 +86,49 @@ productRouter.post("/",async(c)=>{
 
 })
 
+productRouter.get("/myListings", async(c)=>{
+    const prisma=c.get("prisma")
+    const userId=c.get("userId")
+    try{
+    const products=await prisma.product.findMany({
+      include:{images:true},
+        where:{
+            userId
 
+        }
+    })
+    return c.json({
+        products
+    })
+    }
+    catch(e){
+            c.status(400)
+            return c.json({
+                error:e
+            })
+    }
+})
+
+productRouter.post("/delete",async(c)=>{
+    const prisma=c.get("prisma")
+    const userId=c.get("userId")
+    const productId=c.req.query("productId")
+    try{
+   await prisma.product.delete({
+        where:{
+            id:productId,
+            userId
+        }
+    })
+    
+    return c.json({
+        message:"listing successfully deleted"
+    })
+
+}
+catch(e){
+    return c.json({
+        error:e
+    })
+}
+})
