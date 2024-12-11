@@ -19,7 +19,7 @@ model User {
   lastName  String
   email     String    @unique
   password  String
-  products  Product[] // One-to-many relationship with Product
+  products Product[] // One-to-many relationship with Product
 }
 
 model Product {
@@ -27,6 +27,7 @@ model Product {
   name        String
   description String
   category    String
+  contactInformation String
   userId      String? // Foreign key to User
   user        User?   @relation(fields: [userId], references: [id])
   images      Image[] // One-to-many relationship with Image
