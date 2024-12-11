@@ -19,7 +19,7 @@ export default function HomePage() {
     };
 
     useEffect(()=>{
-        const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZTM3YmZiLWFiYmUtNGI2NS04NDNiLTczY2VhM2ZhNWY3NiJ9.J7VPJbwoPP92TTO9NNfVJzzqsxy_HBAZmXaZyUNkJSQ"
+        const token=""
 
         const fetchh=async()=>{
             const res=await axios.get("https://server.sushantjarial7.workers.dev/api/v1/products",{
