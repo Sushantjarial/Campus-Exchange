@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useDebugValue, useEffect, useState } from 'react';
 import NavBarHome from './../components/nav-bar_home';
 import Footer from './../components/footer';
 import plusIcon from './../images/plus.png'; // Adjust the path if needed
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 export default function HomePage() {
+    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
-    const [filter, setFilter] = useState('All');
+    const [filter, setFilter] = useState('');
 
     // Placeholder for number of product slots to display
     const placeholderProductCount = 8;
@@ -14,6 +17,20 @@ export default function HomePage() {
         console.log("Search Term:", searchTerm);
         // Implement your search logic here
     };
+
+    useEffect(()=>{
+        const token=""
+
+        const fetchh=async()=>{
+            const res=await axios.get("https://server.sushantjarial7.workers.dev/api/v1/products",{
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }            })
+
+                console.log(res.data.products)
+        }
+        fetchh();
+    })
 
     return (
         <>
@@ -42,34 +59,41 @@ export default function HomePage() {
                 <div className="flex justify-center space-x-4 mt-4">
                     <button
                         className={`px-4 py-2 rounded-lg ${
-                            filter === 'All' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700'
+                            filter === 'Stationery' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 hover:bg-blue-400'
                         }`}
-                        onClick={() => setFilter('All')}
-                    >
-                        All
+                        onClick={() => setFilter((prevFilter) => (prevFilter === 'Stationery' ? '' : 'Stationery'))}
+                        >
+                        Stationery
                     </button>
                     <button
                         className={`px-4 py-2 rounded-lg ${
-                            filter === 'Books' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700'
+                            filter === 'Books' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 hover:bg-blue-400'
                         }`}
-                        onClick={() => setFilter('Books')}
-                    >
+                        onClick={() => setFilter((prevFilter) => (prevFilter === 'Books' ? '' : 'Books'))}
+                        >
                         Books
                     </button>
                     <button
                         className={`px-4 py-2 rounded-lg ${
-                            filter === 'Gadgets' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700'
+                            filter === 'Furniture' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 hover:bg-blue-400'
                         }`}
-                        onClick={() => setFilter('Gadgets')}
-                    >
-                        Gadgets
+                        onClick={() => setFilter((prevFilter) => (prevFilter === 'Furniture' ? '' : 'Furniture'))}
+                        >
+                        Furniture
                     </button>
                     <button
                         className={`px-4 py-2 rounded-lg ${
-                            filter === 'Essentials' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700'
+                            filter === 'Electronics' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 hover:bg-blue-400'
                         }`}
-                        onClick={() => setFilter('Essentials')}
-                    >
+                        onClick={() => setFilter((prevFilter) => (prevFilter === 'Electronics' ? '' : 'Electronics'))}
+                        >
+                        Electronics
+                    </button> <button
+                        className={`px-4 py-2 rounded-lg ${
+                            filter === 'Essentials' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 hover:bg-blue-400'
+                        }`}             
+                        onClick={() => setFilter((prevFilter) => (prevFilter === 'Essentials' ? '' : 'Essentials'))}
+                        >
                         Essentials
                     </button>
                 </div>
@@ -89,8 +113,8 @@ export default function HomePage() {
             {/* Sell Button */}
             <div className="fixed bottom-5 right-5 z-50">
                 <button
-                    onClick={() => console.log("Navigate to sell page")}
-                    className="flex items-center justify-center p-3 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600"
+            onClick={() => navigate("/sell")}
+            className="flex items-center justify-center p-3 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600"
                 >
                     <img src={plusIcon} alt="Sell" className="w-5 h-5" />
                     <span className="ml-2">Sell</span>
