@@ -7,6 +7,7 @@ import { Signin } from './assets/pages/signin.jsx'
 import { Signup } from './assets/pages/signup.jsx'
 import  HomePage from './assets/pages/home.jsx'
 import  SellPage from './assets/pages/sell.jsx'
+import  MyListings from './assets/pages/mylistings.jsx'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -25,6 +26,7 @@ function App2(){
         <Route path='/signup' element={<Signup/>}></Route>
         <Route path='/home' element={<HomePage/>}></Route>
         <Route path='/sell' element={<SellPage/>}></Route>
+        <Route path='/mylistings' element={<MyListings/>}></Route>
         
       </Routes>
     </div>
