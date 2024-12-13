@@ -1,151 +1,15 @@
-// import React, { useState } from 'react';
-
-// export default function SellPage() {
-//     const [formData, setFormData] = useState({
-//         itemName: '',
-//         category: '',
-//         price: '',
-//         description: '',
-//         image: [],
-//     });
+ import  { useState } from 'react';
 
 
-//     const handleChange = (e) => {
-//         const { name, value } = e.target;
-//         setFormData((prevData) => ({
-//             ...prevData,
-//             [name]: value,
-//         }));
-//     };
 
-//     const handleImageUpload = (e) => {
-//         setFormData((prevData) => ({
-//             ...prevData,
-//             image: e.target.files[0],
-//         }));
-//     };
-
-//     const handleSubmit = (e) => {
-//         e.preventDefault();
-//         console.log('Item Details:', formData);
-//         // Add code here to handle form submission, such as an API request.
-//     };
-
-//     return (
-//         <div className='bg-gray-800'>
-//         <div className="max-w-lg mx-auto p-8 border border-black bg-white rounded-lg shadow-md">
-//             <h2 className="text-2xl font-semibold text-black dark:text-black text-center mb-6">Sell Your Item</h2>
-
-//             <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
-//                 {/* Item Name */}
-//                 <div>
-//                     <label htmlFor="itemName" className="block text-black dark:text-black font-medium mb-2">Item Name</label>
-//                     <input
-//                         type="text"
-//                         id="itemName"
-//                         name="itemName"
-//                         value={formData.itemName}
-//                         onChange={handleChange}
-//                         placeholder="Enter item name"
-//                         required
-//                         className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//                     />
-//                 </div>
-
-//                 {/* Category */}
-//                 <div>
-//                     <label htmlFor="category" className="block text-black dark:text-black font-medium mb-2">Category</label>
-//                     <select
-//                         id="category"
-//                         name="category"
-//                         value={formData.category}
-//                         onChange={handleChange}
-//                         required
-//                         className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//                     >
-//                         <option value="">Select Category</option>
-//                         <option value="Books">Books</option>
-//                         <option value="Gadgets">Gadgets</option>
-//                         <option value="Essentials">Essentials</option>
-//                     </select>
-//                 </div>
-
-//                 {/* Price */}
-//                 <div>
-//                     <label htmlFor="price" className="block text-black dark:text-black font-medium mb-2">Price (Rs)</label>
-//                     <input
-//                         type="number"
-//                         id="price"
-//                         name="price"
-//                         value={formData.price}
-//                         onChange={handleChange}
-//                         placeholder="Enter price"
-//                         required
-//                         className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//                     />
-//                 </div>
-
-//                 {/* Description */}
-//                 <div>
-//                     <label htmlFor="description" className="block text-black dark:text-black font-medium mb-2">Description</label>
-//                     <textarea
-//                         id="description"
-//                         name="description"
-//                         value={formData.description}
-//                         onChange={handleChange}
-//                         placeholder="Describe the item"
-//                         rows="4"
-//                         required
-//                         className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//                     ></textarea>
-//                 </div>
-
-//                 {/* Image Upload */}
-//                 <div>
-//                     <label htmlFor="imageUpload1" className="block text-black dark:text-black font-medium mb-2">Upload Image</label>
-//                     <input
-//                         type="file"
-//                         id="imageUpload1"
-//                         name="image"
-//                         onChange={handleImageUpload}
-//                         accept="image/*"
-//                         required
-//                         className="w-full"
-//                     />
-//                 </div>
-//                 <div>
-//                     <label htmlFor="imageUpload2" className="block text-black dark:text-black font-medium mb-2">Upload Image</label>
-//                     <input
-//                         type="file"
-//                         id="imageUpload2"
-//                         name="image"
-//                         onChange={handleImageUpload}
-//                         accept="image/*"
-//                         required
-//                         className="w-full"
-//                     />
-//                 </div>
-
-//                 {/* Submit Button */}
-//                 <button type="submit" className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-//                     Submit
-//                 </button>
-//             </form>
-//         </div>
-//         </div>
-//     );
-// }
-
-
-import React, { useState } from 'react';
-type formType = {
-    itemName: string,
-    category: string,
-    price: string,
-    description: string,
-    images: any[]
-}
 export default function SellPage() {
+    type formType = {
+        itemName: string,
+        category: string,
+        price: string,
+        description: string,
+        images: any[]
+    }
     const [formData, setFormData] = useState<formType>({
         itemName: '',
         category: '',

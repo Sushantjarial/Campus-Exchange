@@ -20,6 +20,7 @@ export default function NavBarHome() {
         const handleClickOutside = (event: { target: any; }) => {
             if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
                 setProfileMenuOpen(false);
+                setMenuOpen(true)
             }
         };
 
