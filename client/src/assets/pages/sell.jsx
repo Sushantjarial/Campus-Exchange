@@ -182,8 +182,14 @@ export default function SellPage() {
     };
 
     return (
-        <div className="bg-gray-800">
-            <div className="max-w-lg mx-auto p-8 border border-black bg-white rounded-lg shadow-md">
+        <div
+  id="bg-image"
+  className="bg-cover  bg-[url('https://images.unsplash.com/photo-1470790376778-a9fbc86d70e2?q=80&w=1408&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] flex items-center justify-center"
+>
+  <div
+    id="front"
+    className="w-full max-w-lg p-8 bg-white rounded-lg"
+  >
                 <h2 className="text-2xl font-semibold text-black text-center mb-6">Sell Your Item</h2>
                 
                 <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
@@ -198,7 +204,8 @@ export default function SellPage() {
                             onChange={handleChange}
                             placeholder="Enter item name"
                             required
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-4 py-2 border border-gray-300 hover:outline-none hover:ring-2 hover:ring-blue-500
+                             rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
 
@@ -211,7 +218,9 @@ export default function SellPage() {
                             value={formData.category}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className=" w-full px-4 py-2 border border-gray-300 rounded-lg 
+                            hover:outline-none hover:ring-2 hover:ring-blue-500
+                            focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="">Select Category</option>
                             <option value="Books">Stationery</option>
@@ -234,7 +243,7 @@ export default function SellPage() {
                             onChange={handleChange}
                             placeholder="Enter price"
                             required
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="hover:outline-none hover:ring-2 hover:ring-blue-500 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
 
@@ -249,7 +258,7 @@ export default function SellPage() {
                             placeholder="Describe the item"
                             rows="4"
                             required
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="hover:outline-none hover:ring-2 hover:ring-blue-500 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         ></textarea>
                     </div>
 
