@@ -6,12 +6,23 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 export default function HomePage() {
+    type PRODUCT ={
+        id:string,
+        name:string,
+        description:string,
+        category:string,
+        contactInformation:string
+    }
+
+
+
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [filter, setFilter] = useState('');
+    const [products,setProducts]=useState<PRODUCT[]>()
 
     // Placeholder for number of product slots to display
-    const placeholderProductCount = 8;
+    const placeholderProductCount = 20;
 
     const handleSearch = () => {
         console.log("Search Term:", searchTerm);
@@ -19,7 +30,7 @@ export default function HomePage() {
     };
 
     useEffect(() => {
-        const token = "";
+        const token = localStorage.getItem("token");
 
         const fetchProducts = async () => {
             try {
@@ -29,6 +40,7 @@ export default function HomePage() {
                     },
                 });
                 console.log(res.data.products);
+                setProducts(res.data.products)
             } catch (error) {
                 console.error("Error fetching products:", error);
             }
@@ -38,7 +50,7 @@ export default function HomePage() {
     }, []);
 
     return (
-        <>
+        <div>
             <NavBarHome />
 
             {/* Search and Filter Section */}
@@ -82,16 +94,25 @@ export default function HomePage() {
             </div>
 
             {/* Product Listing Section */}
+          {(!products)?
             <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-white dark:bg-gray-800">
                 {[...Array(placeholderProductCount)].map((_, index) => (
-                    <div key={index} className="bg-gray-200 dark:bg-gray-700 rounded-lg shadow-md p-4 flex flex-col items-center">
+                    <div key={index} className="bg-gray-200 dark:bg-gray-900 rounded-lg shadow-md p-4 flex flex-col items-center">
                         <div className="w-full h-32 bg-gray-300 dark:bg-gray-600 rounded-md mb-4"></div>
                         <div className="h-4 bg-gray-400 dark:bg-gray-500 rounded w-3/4 mb-2"></div>
                         <div className="h-4 bg-gray-400 dark:bg-gray-500 rounded w-1/2"></div>
                     </div>
                 ))}
+            </div> : <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-white dark:bg-gray-800">
+                {products.map((product) => (
+                    <div key={product.id} className="bg-gray-500 dark:bg-gray-700 rounded-lg shadow-md p-4 flex flex-col items-start font-semibold">
+                        <div className="w-full h-32 bg-gray-300 dark:bg-gray-900 rounded-md mb-4"></div>
+                        <div className=" text-2xl  rounded w-3/4 mb-2">{product.name}</div>
+                        <div className=" text-lg bg-gray-600 items-center  rounded px-2">{product.category}</div>
+                    </div>
+                ))}
             </div>
-
+}
              {/* Sell Button */}
              <div className="fixed bottom-5 right-5 z-50">
                 <button
@@ -104,6 +125,6 @@ export default function HomePage() {
             </div>
 
             <Footer />
-        </>
+        </div>
     );
 }

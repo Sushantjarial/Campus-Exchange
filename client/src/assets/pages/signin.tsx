@@ -6,24 +6,24 @@ import { signinInput } from "@sushantjarial/blog-common";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../../../config";
 import axios from "axios";
-import { toast } from "react-toastify";
-
+import {toast} from "react-hot-toast"
 export function Signin() {
   const navigate = useNavigate()
   const [signInput, setSignInput] = useState<signinInput>({ email: "", password: "" })
 
   const sendRequest = async () => {
     try {
-      if (!(signInput.email || signInput.password)) { toast.error("All fields are required"); } else {
-        const res = await axios.post(`${BACKEND_URL}/signin`, signInput); const { token } = res.data; localStorage.setItem("token", token);
-        navigate("/blogs"); toast.success("signed in");
+      console.log(signInput)
+      if (!(signInput.email && signInput.password)) { toast.error("All fields are required"); } else {
+        const res = await axios.post(`${BACKEND_URL}/user/signin`, signInput); const { token } = res.data; localStorage.setItem("token", token);
+        navigate("/home"); toast.success("signed in");
       }
     } catch (e: any) {
       if (e.response) {
-        e.response.data.error
-        ? e.response.data.error.map((errorr: any) => {
+        e.response.data.error.issues
+        ? e.response.data.error.issues.map((errorr: any) => {
           toast.error(errorr.message);
-        }) : toast.error(e.response.data.message);
+        }) : toast.error(e.response.data.error);
       } else { toast.error(e.message); }
     }
   };

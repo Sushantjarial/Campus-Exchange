@@ -6,7 +6,7 @@ import {  useNavigate } from "react-router-dom";
 import { SignButton } from "../components/signButton.jsx";
 import {BACKEND_URL} from "../../../config.ts"
 import axios from "axios";
-import {toast} from "react-toastify"
+import {toast} from "react-hot-toast"
 export function Signup() {
   const navigate=useNavigate()
   const [signInput,setSignupInput]=useState<signupInput>({firstName:"", 
@@ -21,13 +21,12 @@ export function Signup() {
          toast.error('All fields are required')
       }
       else{
-   const res= await axios.post(`${BACKEND_URL}/signup`, signInput);
+   const res= await axios.post(`${BACKEND_URL}/user/signup`, signInput);
    toast.success("Succesfully signed up")
    const {token} = res.data ;
    localStorage.setItem("token",token)
    localStorage.setItem("username",signInput.firstName)
     navigate("/home")
-
     } }
     catch(e:any){
       //  alert(e.response.data.message)
