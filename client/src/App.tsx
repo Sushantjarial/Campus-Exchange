@@ -8,6 +8,7 @@ import  HomePage from './assets/pages/home.tsx'
 import  SellPage from './assets/pages/sell.tsx'
 import  MyListings from './assets/pages/mylistings.tsx'
 import { Toaster } from "react-hot-toast";
+import { OneProduct } from './assets/pages/oneProduct.tsx'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Route path='/home' element={<HomePage/>}></Route>
         <Route path='/sell' element={<SellPage/>}></Route>
         <Route path='/mylistings' element={<MyListings/>}></Route>
+        <Route path='/oneProduct' element={<OneProduct/>}></Route>
         
       </Routes>
     

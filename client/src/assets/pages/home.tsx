@@ -4,6 +4,7 @@ import Footer from './../components/footer';
 import plusIcon from './../images/plus.png'; // Adjust the path if needed
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import toast from 'react-hot-toast';
 
 export default function HomePage() {
     type PRODUCT ={
@@ -31,7 +32,7 @@ export default function HomePage() {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-
+        toast.error("the website is currently under development")
         const fetchProducts = async () => {
             try {
                 const res = await axios.get("https://server.sushantjarial7.workers.dev/api/v1/products", {
@@ -105,14 +106,14 @@ export default function HomePage() {
                 ))}
             </div> : <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-white dark:bg-gray-800">
                 {products.map((product) => (filter)?
-                (product.category==filter)? <div key={product.id} className="bg-gray-500 dark:bg-gray-700 rounded-lg shadow-md p-4 flex flex-col items-start font-semibold">
+                (product.category==filter)? <div onClick={()=>{navigate("/oneProduct")}} key={product.id} className="hover:cursor-pointer bg-gray-500 dark:bg-gray-700 rounded-lg shadow-md p-4 flex flex-col items-start font-semibold">
                 <div className="w-full h-32 bg-gray-300 dark:bg-gray-900 rounded-md mb-4"></div>
                 <div className=" text-2xl  rounded w-3/4 mb-2">{product.name}</div>
                 <div className=" text-lg bg-gray-600 items-center  rounded px-2">{product.category}</div>
             </div>:<></>
                 :(
                     
-                    <div key={product.id} className="bg-gray-500 dark:bg-gray-700 rounded-lg shadow-md p-4 flex flex-col items-start font-semibold">
+                    <div key={product.id} onClick={()=>{navigate("/oneProduct")}} className="hover:cursor-pointer bg-gray-500 dark:bg-gray-700 rounded-lg shadow-md p-4 flex flex-col items-start font-semibold">
                         <div className="w-full h-32 bg-gray-300 dark:bg-gray-900 rounded-md mb-4"></div>
                         <div className=" text-2xl  rounded w-3/4 mb-2">{product.name}</div>
                         <div className=" text-lg bg-gray-600 items-center  rounded px-2">{product.category}</div>
