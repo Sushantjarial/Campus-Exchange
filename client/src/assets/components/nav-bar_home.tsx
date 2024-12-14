@@ -5,7 +5,6 @@ import profileIcon from './../images/profile.png'; // Importing a custom profile
 
 export default function NavBarHome() {
     const navigate = useNavigate();
-    const [menuOpen, setMenuOpen] = useState(false);
     const [profileMenuOpen, setProfileMenuOpen] = useState(false); // For profile dropdown menu
     const [searchQuery, setSearchQuery] = useState("");
     const profileMenuRef = useRef<HTMLDivElement>(null); // Create a ref for the profile menu
@@ -20,7 +19,6 @@ export default function NavBarHome() {
         const handleClickOutside = (event: { target: any; }) => {
             if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
                 setProfileMenuOpen(false);
-                setMenuOpen(true)
             }
         };
 
@@ -104,11 +102,7 @@ export default function NavBarHome() {
             </div>
 
             {/* Mobile Profile Button - Visible Only on Small Screens */}
-            <div className={`md:hidden ${menuOpen ? "block" : "hidden"} bg-gray-300 dark:bg-gray-800`}>
-                <button onClick={() => navigate("/profile")} className="block w-full text-left px-4 py-3 text-gray-800 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-700">
-                    Profile
-                </button>
-            </div>
+            
         </>
     );
 }

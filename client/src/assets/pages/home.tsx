@@ -56,7 +56,7 @@ export default function HomePage() {
             {/* Search and Filter Section */}
             <div className=" bg-gray-100 dark:bg-gray-900 p-4">
                 <div className="flex flex-col items-center space-y-4">
-                    {/* Search Bar and Button */}
+                    {/* Search Bar and Button  for small screens */}
                     <div className="w-full flex sm:hidden items-center space-x-2">
                         <input
                             type="text"
@@ -104,7 +104,14 @@ export default function HomePage() {
                     </div>
                 ))}
             </div> : <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-white dark:bg-gray-800">
-                {products.map((product) => (
+                {products.map((product) => (filter)?
+                (product.category==filter)? <div key={product.id} className="bg-gray-500 dark:bg-gray-700 rounded-lg shadow-md p-4 flex flex-col items-start font-semibold">
+                <div className="w-full h-32 bg-gray-300 dark:bg-gray-900 rounded-md mb-4"></div>
+                <div className=" text-2xl  rounded w-3/4 mb-2">{product.name}</div>
+                <div className=" text-lg bg-gray-600 items-center  rounded px-2">{product.category}</div>
+            </div>:<></>
+                :(
+                    
                     <div key={product.id} className="bg-gray-500 dark:bg-gray-700 rounded-lg shadow-md p-4 flex flex-col items-start font-semibold">
                         <div className="w-full h-32 bg-gray-300 dark:bg-gray-900 rounded-md mb-4"></div>
                         <div className=" text-2xl  rounded w-3/4 mb-2">{product.name}</div>
