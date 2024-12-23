@@ -116,7 +116,7 @@ export default function HomePage() {
             </div>:<></>
                 :(
                     
-                    <div key={product.id} onClick={()=>{navigate("/oneProduct")}} className="hover:cursor-pointer bg-gray-500 dark:bg-gray-700 rounded-lg shadow-md p-4 flex flex-col items-start font-semibold">
+                    <div key={product.id} onClick={()=>{navigate(`/oneProduct?id=${product.id}`)}} className="hover:cursor-pointer bg-gray-500 dark:bg-gray-700 rounded-lg shadow-md p-4 flex flex-col items-start font-semibold">
                         <div className="w-full h-32 bg-gray-300 dark:bg-gray-900 rounded-md mb-4">
                         <img className='w-full h-32' src={product.images[0].link} alt={product.name} />
 

@@ -1,12 +1,7 @@
 import { useState } from "react"
 
-export function ImageSlider() {
-    const images = [
-        "https://apollo.olx.in/v1/files/qyb5whn9aqb2-IN/image;s=780x0;q=60",
-        "https://apollo.olx.in/v1/files/vigo10jw9lh33-IN/image;s=780x0;q=60",
-        "https://apollo.olx.in/v1/files/2okw8eit1b681-IN/image;s=780x0;q=60",
-        "https://apollo.olx.in/v1/files/90uz5rl0rh5f1-IN/image;s=780x0;q=60",
-    ];
+export function ImageSlider({ images }: { images: any[] }) {
+ 
     const [currentIndex, setCurrentIndex] = useState(0)
     const next = () => {
         if (currentIndex < images.length-1) {
@@ -23,7 +18,7 @@ export function ImageSlider() {
         <div className=" bg-black rounded-lg min-h-[calc(100vh-4rem)] max-h-[calc(100vh-4rem)]  flex justify-center relative ">
             {images.map((image, index) => {
                 if (index == currentIndex) {
-                    return <img className="  max-h-[calc(100vh-4rem)]  px-12 " key={index} src={image}></img>
+                    return <img className="  max-h-[calc(100vh-4rem)]  px-12 " key={index} src={image.link}></img>
                 }
                 
             })}

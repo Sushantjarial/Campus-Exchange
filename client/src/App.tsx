@@ -6,9 +6,9 @@ import { Signin } from './assets/pages/signin.tsx'
 import { Signup } from './assets/pages/signup.tsx'
 import  HomePage from './assets/pages/home.tsx'
 import  SellPage from './assets/pages/sell.tsx'
-import  MyListings from './assets/pages/mylistings.tsx'
 import { Toaster } from "react-hot-toast";
 import { OneProduct } from './assets/pages/oneProduct.tsx'
+import MyListings from './assets/pages/mylistings.tsx'
 
 function App() {
 
