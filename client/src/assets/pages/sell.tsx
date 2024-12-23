@@ -1,19 +1,29 @@
- import  { useState } from 'react';
+ import axios from 'axios';
+import  { useState } from 'react';
+import { BACKEND_URL } from '../../../config';
+import { z } from 'zod';
 
 
 
 export default function SellPage() {
+    const productSchema = z.object({
+        name: z.string().min(1, "name of the product is required").max(100, "name too long"),
+        description: z.string().max(1000, "description too long"),
+        category: z.string().max(100),
+        contactInformation: z.string().max(2000, "contact information too long"),
+    })
+
     type formType = {
-        itemName: string,
+        name: string,
         category: string,
-        price: string,
+        contactInformation: string,
         description: string,
         images: any[]
     }
     const [formData, setFormData] = useState<formType>({
-        itemName: '',
+        name: '',
         category: '',
-        price: '',
+        contactInformation: '',
         description: '',
         images: [], // Store multiple images
     });
@@ -34,22 +44,31 @@ export default function SellPage() {
         }));
     };
 
-    const handleSubmit = (e: any) => {
-        e.preventDefault();
-        console.log('Item Details:', formData);
-
-        // Example for form submission logic
-        // const formDataToSend = new FormData();
-        // formDataToSend.append('itemName', formData.itemName);
-        // formDataToSend.append('category', formData.category);
-        // formDataToSend.append('price', formData.price);
-        // formDataToSend.append('description', formData.description);
-
-        // formData.images.forEach((image, index) => {
-        //     formDataToSend.append(`images[${index}]`, image);
-        // });
-        // Send `formDataToSend` to your backend via API request (e.g., fetch or axios)
-    };
+const handleSubmit = async(e: any) => {
+    e.preventDefault();
+    console.log('Item Details:', formData);
+    const token = localStorage.getItem("token");
+    const {success,error}=productSchema.safeParse(formData)
+    if(!success){
+        console.log(error.issues)
+        console.log("not success")
+        return
+    }
+    if (token) {
+        try {
+            const response = await axios.post(`${BACKEND_URL}/products`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            console.log('Response:', response.data);
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        }
+    } else {
+        console.error('No token found');
+    }
+};
 
     return (
         <div
@@ -69,8 +88,8 @@ export default function SellPage() {
                         <input
                             type="text"
                             id="itemName"
-                            name="itemName"
-                            value={formData.itemName}
+                            name="name"
+                            value={formData.name}
                             onChange={handleChange}
                             placeholder="Enter item name"
                             required
@@ -93,11 +112,11 @@ export default function SellPage() {
                             focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="">Select Category</option>
-                            <option value="Books">Stationery</option>
-                            <option value="Gadgets">Electronics</option>
+                            <option value="Stationery">Stationery</option>
+                            <option value="Electronics">Electronics</option>
                             <option value="Furniture">Furniture</option>
                             <option value="Books">Books</option>
-                            <option value="Others">Others</option>
+                            <option value="Essentials">Others</option>
                         </select>
                     </div>
 
@@ -105,11 +124,11 @@ export default function SellPage() {
                     <div>
                         <label htmlFor="price" className="block text-black font-medium mb-2">Price (Rs)</label>
                         <input
-                            type="number"
+                            type="text"
                             id="price"
-                            name="price"
+                            name="contactInformation"
                             min={1}
-                            value={formData.price}
+                            value={formData.contactInformation}
                             onChange={handleChange}
                             placeholder="Enter price"
                             required

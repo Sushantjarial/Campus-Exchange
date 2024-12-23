@@ -13,6 +13,7 @@ export default function HomePage() {
         description:string,
         category:string,
         contactInformation:string
+        images:[{link:string}]
     }
 
 
@@ -107,15 +108,21 @@ export default function HomePage() {
             </div> : <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-white dark:bg-gray-800">
                 {products.map((product) => (filter)?
                 (product.category==filter)? <div onClick={()=>{navigate("/oneProduct")}} key={product.id} className="hover:cursor-pointer bg-gray-500 dark:bg-gray-700 rounded-lg shadow-md p-4 flex flex-col items-start font-semibold">
-                <div className="w-full h-32 bg-gray-300 dark:bg-gray-900 rounded-md mb-4"></div>
+                <div className="w-full h-32 bg-gray-300 dark:bg-gray-900 rounded-md mb-4">
+                <img className='w-full h-32' src={product.images[0].link} alt={product.name} />
+                </div>
                 <div className=" text-2xl  rounded w-3/4 mb-2">{product.name}</div>
                 <div className=" text-lg bg-gray-600 items-center  rounded px-2">{product.category}</div>
             </div>:<></>
                 :(
                     
                     <div key={product.id} onClick={()=>{navigate("/oneProduct")}} className="hover:cursor-pointer bg-gray-500 dark:bg-gray-700 rounded-lg shadow-md p-4 flex flex-col items-start font-semibold">
-                        <div className="w-full h-32 bg-gray-300 dark:bg-gray-900 rounded-md mb-4"></div>
+                        <div className="w-full h-32 bg-gray-300 dark:bg-gray-900 rounded-md mb-4">
+                        <img className='w-full h-32' src={product.images[0].link} alt={product.name} />
+
+                        </div>
                         <div className=" text-2xl  rounded w-3/4 mb-2">{product.name}</div>
+                        
                         <div className=" text-lg bg-gray-600 items-center  rounded px-2">{product.category}</div>
                     </div>
                 ))}
