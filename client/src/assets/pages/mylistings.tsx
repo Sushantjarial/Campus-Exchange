@@ -1,38 +1,7 @@
-// import React from 'react';
 
-// export default function MyListings() {
-//     return (
-//         <div className="max-w-4xl mx-auto p-4 bg-gray-100 min-h-screen">
-//             <header className="bg-green-500 text-white p-4 rounded mb-6">
-//                 <h1 className="text-2xl font-bold text-center">My Listings</h1>
-//             </header>
-//             <div className="flex flex-col gap-4">
-//                 {/* Placeholder for loading state */}
-//                 <div className="text-center text-gray-600">Loading your listings...</div>
-
-//                 {/* Placeholder for no listings state */}
-//                 <div className="text-center text-gray-600">You have no listings yet. Start adding items to sell or exchange!</div>
-
-//                 {/* Placeholder for listing items */}
-//                 <div className="flex items-center justify-between bg-white shadow-md rounded p-4">
-//                     <div className="w-20 h-20 bg-gray-300 rounded"></div>
-//                     <div className="flex-1 ml-4">
-//                         <div className="h-6 bg-gray-300 rounded w-1/2 mb-2"></div>
-//                         <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-//                         <div className="h-5 bg-gray-300 rounded w-1/4"></div>
-//                     </div>
-//                     <div className="flex gap-2">
-//                         <button className="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded">Edit</button>
-//                         <button className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded">Delete</button>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
 
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { BACKEND_URL } from "../../../config";
 import NavBar from "../components/nav-bar_home";
 
