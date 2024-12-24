@@ -91,7 +91,7 @@ export default function NavBarHome() {
                                 Settings
                             </button>
                             <button
-                                onClick={() => { setProfileMenuOpen(false); navigate("/logout"); }}
+                                onClick={() => { setProfileMenuOpen(false); navigate("/"); }}
                                 className="block w-full text-left px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
                             >
                                 Log Out
