@@ -107,7 +107,7 @@ export default function HomePage() {
                 ))}
             </div> : <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-white dark:bg-gray-800">
                 {products.map((product) => (filter)?
-                (product.category==filter)? <div onClick={()=>{navigate("/oneProduct")}} key={product.id} className="hover:cursor-pointer bg-gray-500 dark:bg-gray-700 rounded-lg shadow-md p-4 flex flex-col items-start font-semibold">
+                (product.category==filter)? <div onClick={()=>{navigate(`/oneProduct?id=${product.id}`)}} key={product.id} className="hover:cursor-pointer bg-gray-500 dark:bg-gray-700 rounded-lg shadow-md p-4 flex flex-col items-start font-semibold">
                 <div className="w-full h-32 bg-gray-300 dark:bg-gray-900 rounded-md mb-4">
                 <img className='w-full h-32' src={product.images[0].link} alt={product.name} />
                 </div>
