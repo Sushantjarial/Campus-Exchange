@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import logo from "./../images/logo2.png"; // Adjust the path if needed
 import plusIcon from "./../images/plus.png"; // Adjust the path if needed
@@ -44,15 +44,15 @@ export default function NavBarHome({
     <>
       <div className="flex justify-between  items-center bg-gray-800 p-3 shadow-lg border-b border-gray-400 dark:border-gray-700">
         {/* Logo and Title */}
-        <div
-          onClick={() => navigate("/home")}
+        <Link
+          to="/home"
           className="flex items-center space-x-3 hover:cursor-pointer"
         >
           <img src={logo} className="w-8 h-8 sm:w-10 sm:h-10 mx-2" alt="Logo" />
           <div className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 dark:text-gray-200 ">
             Campus Exchange
           </div>
-        </div>
+        </Link>
 
         {/* Search Bar Centered - Visible on Medium Screens and Up */}
         <form
