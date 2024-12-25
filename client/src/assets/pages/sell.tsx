@@ -59,7 +59,7 @@ const handleSubmit = async(e: any) => {
     }
     if (token) {
         try {
-            const response = await axios.post(`${BACKEND_URL}/products`, formData, {
+             await axios.post(`${BACKEND_URL}/products`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
