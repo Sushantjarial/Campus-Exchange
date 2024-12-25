@@ -75,6 +75,7 @@ return (
         <InputBox
           onChange={(e) => setSignInput({ ...signInput, password: e.target.value })}
           label="Password"
+          type="password"
           placeholder="Enter your password"
         />
 

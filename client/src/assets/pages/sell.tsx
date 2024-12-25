@@ -2,21 +2,23 @@
 import  { useState } from 'react';
 import { BACKEND_URL } from '../../../config';
 import { z } from 'zod';
+import toast from 'react-hot-toast';
 
 
 
 export default function SellPage() {
     const productSchema = z.object({
-        name: z.string().min(1, "name of the product is required").max(100, "name too long"),
-        description: z.string().max(1000, "description too long"),
-        category: z.string().max(100),
-        contactInformation: z.string().max(2000, "contact information too long"),
+        name: z.string(),
+        description: z.string(),
+        category: z.string(),
+        contactInformation: z.string()
     })
 
     type formType = {
         name: string,
         category: string,
         contactInformation: string,
+        price: string,
         description: string,
         images: any[]
     }
@@ -25,6 +27,7 @@ export default function SellPage() {
         category: '',
         contactInformation: '',
         description: '',
+        price:'',
         images: [], // Store multiple images
     });
 
@@ -61,7 +64,7 @@ const handleSubmit = async(e: any) => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log('Response:', response.data);
+            toast.success("Product Listed")
         } catch (error) {
             console.error('Error submitting form:', error);
         }
@@ -121,8 +124,28 @@ const handleSubmit = async(e: any) => {
                     </div>
 
                     {/* Price */}
+
                     <div>
                         <label htmlFor="price" className="block text-black font-medium mb-2">Price (Rs)</label>
+                        <input
+                            type="number"
+                            id="price"
+                            name="price"
+                            min={1}
+                            value={formData.price}
+                            onChange={handleChange}
+                            placeholder="Enter price"
+                            required
+                            className="hover:outline-none hover:ring-2 hover:ring-blue-500 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+
+
+
+
+
+                    <div>
+                        <label htmlFor="contactInformation" className="block text-black font-medium mb-2">Contact Information (Phn no)</label>
                         <input
                             type="text"
                             id="price"
@@ -130,7 +153,7 @@ const handleSubmit = async(e: any) => {
                             min={1}
                             value={formData.contactInformation}
                             onChange={handleChange}
-                            placeholder="Enter price"
+                            placeholder="Enter contact information "
                             required
                             className="hover:outline-none hover:ring-2 hover:ring-blue-500 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />

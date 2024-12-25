@@ -18,7 +18,7 @@ export function ImageSlider({ images }: { images: any[] }) {
         <div className=" bg-black rounded-lg min-h-[calc(100vh-4rem)] max-h-[calc(100vh-4rem)]  flex justify-center relative ">
             {images.map((image, index) => {
                 if (index == currentIndex) {
-                    return <img className="  max-h-[calc(100vh-4rem)]  px-12 " key={index} src={image.link}></img>
+                    return <img className="  max-h-[calc(100vh-4rem)] my-4 px-12 " key={index} src={image.link}></img>
                 }
                 
             })}
