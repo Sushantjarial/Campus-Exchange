@@ -48,7 +48,7 @@ setSearchTerm(searchTerm)
         const token = localStorage.getItem("token");
         const fetchProducts = async () => {
             try {
-                const res = await axios.get("https://server.sushantjarial7.workers.dev/api/v1/products", {
+                const res = await axios.get("https://server.sushantjarial7.workers.dev/api/v1/user/home", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -122,7 +122,7 @@ setSearchTerm(searchTerm)
                 ))}
             </div> : <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-white dark:bg-gray-800">
                 {products.map((product) => (filter)?
-                (product.category==filter)? <div onClick={()=>{navigate(`/oneProduct?id=${product.id}`)}} key={product.id} className="hover:cursor-pointer  transition-all  shadow-blue-500 shadow-sm  border-green-600 hover:border-y-2 bg-gray-900 rounded-lg  p-4 flex flex-col items-start font-semibold">
+                (product.category==filter)? <div onClick={()=>{navigate(`/oneProduct?id=${product.id}`)}} key={product.id} className="hover:cursor-pointer  transition-all  shadow-blue-500 shadow-sm  border-green-600 hover:shadow-green-500 hover:shadow-xl bg-gray-900 rounded-lg  p-4 flex flex-col items-start font-semibold">
                 <div className="w-full h-32 bg-gray-300 dark:bg-gray-900 rounded-md mb-4">
                 <img className='w-full h-32' src={product.images[0].link} alt={product.name} />
                 </div>
@@ -130,12 +130,12 @@ setSearchTerm(searchTerm)
                 <div className=" text-2xl font-bold text-white rounded w-3/4 ">₹ {product.price}</div>
                 <div className=" text-lg bg-gray-600  items-center  rounded px-2">{product.category}</div>
                 </div>
-                <div className='text-white opacity-50'>{(product.name.length>40)?product.name.slice(0,40)+"...":product.name}</div>
+                <div className='text-slate-500'>{(product.name.length>40)?product.name.slice(0,40)+"...":product.name}</div>
                 
             </div>:<></>
                 :(
                     
-                    <div key={product.id} onClick={()=>{navigate(`/oneProduct?id=${product.id}`)}} className="hover:cursor-pointer  transition-all  shadow-blue-500 shadow-sm  border-green-600 hover:border-y-2 bg-gray-900 rounded-lg  p-4 flex flex-col items-start font-semibold">
+                    <div key={product.id} onClick={()=>{navigate(`/oneProduct?id=${product.id}`)}} className="hover:cursor-pointer  transition-all  shadow-blue-500 shadow-sm  border-green-600 hover:shadow-green-500 hover:shadow-xl bg-gray-900 rounded-lg  p-4 flex flex-col items-start font-semibold">
                         <div className="w-full h-32 bg-gray-900 rounded-md mb-4">
                         <img className='w-full h-32 rounded-lg' src={product.images[0].link} alt={product.name} />
 

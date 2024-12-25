@@ -28,6 +28,7 @@ const MyListings = () => {
     try {
       // Replace with your backend API URL
       const token=localStorage.getItem("token")
+      console.log(token)
       const response = await  axios.get(`${BACKEND_URL}/products/myListings`,{
         headers:{
           Authorization: `Bearer ${token}`
@@ -70,7 +71,7 @@ const MyListings = () => {
   }
 
   return (
-    <div className=" bg-gradient-to-br from-gray-800 to-gray-900 ">  
+    <div className=" bg-gradient-to-br min-h-screen from-gray-800 to-gray-900 ">  
       <NavBar></NavBar>
        <div className="max-w-4xl  mx-auto p-4">
       

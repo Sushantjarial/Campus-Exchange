@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { E } from "../src";
 import { signinInput, signupInput } from "@sushantjarial/blog-common";
 import { sign } from "hono/jwt";
+import { use } from "hono/jsx";
 export const userRouter=new Hono<E>();
 
 userRouter.post("/signup",async(c)=>{
@@ -10,7 +11,8 @@ userRouter.post("/signup",async(c)=>{
     
     const {success,error}=signupInput.safeParse(body);
     if(!success){
-        return c.json({
+       c.status(401)
+	    return c.json({
             error:error.issues
         })
     }
@@ -79,6 +81,45 @@ userRouter.post("/signin",async(c)=>{
     catch(e){
         return c.json({
             error: e
+        })
+    }
+})
+
+userRouter.get("/home",async(c)=>{
+    
+   
+    const prisma=c.get("prisma");
+    const category=c.req.query("category")
+    const categories=c.get("categories")
+    if(category&&!categories.includes("category")){
+        c.status(400)
+        return c.json({
+            error: "invalid categories provided"
+        })
+    }
+    try{
+        
+        const products=await prisma.product.findMany({
+            select:
+            {
+                id: true,
+                name: true,
+                description: true,
+                category: true,
+                contactInformation: true,
+                price:true,
+                images: true,
+            },
+            where: category ? { category } : {},
+        })
+        return c.json({
+            products
+        })
+    }
+    catch(e){
+        c.status(500)
+        return c.json({
+            error:"error while fetching products"
         })
     }
 })

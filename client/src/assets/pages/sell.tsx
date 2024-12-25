@@ -2,11 +2,13 @@
 import  { useState } from 'react';
 import { BACKEND_URL } from '../../../config';
 import { z } from 'zod';
-import toast from 'react-hot-toast';
-
+import toast from 'react-hot-toast'
+import returnIcon from '../images/return.png'
+import { useNavigate } from 'react-router-dom';
 
 
 export default function SellPage() {
+    const navigate=useNavigate()
     const productSchema = z.object({
         name: z.string(),
         description: z.string(),
@@ -70,6 +72,8 @@ const handleSubmit = async(e: any) => {
         }
     } else {
         console.error('No token found');
+        toast.error("signin first")
+        navigate("/signin")
     }
 };
 
@@ -80,8 +84,9 @@ const handleSubmit = async(e: any) => {
         >
             <div
                 id="front"
-                className="w-full max-w-lg p-8 bg-white rounded-lg"
+                className="w-full max-w-lg p-8  bg-white rounded-lg"
             >
+                <img src={returnIcon}  onClick={()=>navigate("/home")} className='w-10 h-10 hover:scale-105 transition-all hover:cursor-pointer '></img>
                 <h2 className="text-2xl font-semibold text-black text-center mb-6">Sell Your Item</h2>
 
                 <form onSubmit={handleSubmit} className="flex flex-col space-y-6">

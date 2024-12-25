@@ -1,50 +1,20 @@
 import { Hono } from "hono";
 import { E } from "../src";
-import z, { string } from "zod"
+import z, { number, string } from "zod"
 
 export const productRouter=new Hono<E>();
 
-productRouter.get("/",async(c)=>{
-    
-   
-    const prisma=c.get("prisma");
-    const category=c.req.query("category")
-    const categories=c.get("categories")
-    if(category&&!categories.includes("category")){
-        c.status(400)
-        return c.json({
-            error: "invalid categories provided"
-        })
-    }
-    try{
-        
-        const products=await prisma.product.findMany({
-            
-            where: category ? { category } : {}
-        })
-        return c.json({
-            products
-        })
-    }
-    catch(e){
-        c.status(500)
-        return c.json({
-            error:"error while fetching products"
-        })
-    }
-})
+
 
 productRouter.post("/",async(c)=>{
+ 
 
-    const productSchema=z.object({
-        name : string().min(1,"name of the product is required").max(100,"name too long"),
-        description:string().max(1000,"description too long"),
-        category:string().max(100),
-        contactInformation:string().max(2000,"contact information too long"),
-        images: z
-        .array(z.string())
-        .optional(),
-
+    const productSchema = z.object({
+        name: string(),
+        description: string(),
+        category: string(),
+        contactInformation: string(),
+        price:string()
     })
     const prisma=c.get("prisma")
     const userId=c.get("userId")||""
@@ -53,21 +23,18 @@ productRouter.post("/",async(c)=>{
     if(!success){
         c.status(400)
         return  c.json({
-            error:error.issues
+            error:error
         })
     }
  try{
-    console.log(userId)
-    console.log(body)
+ 
+    const imagesUrl=["https://rukminim2.flixcart.com/image/832/832/xif0q/book/k/c/3/5-books-set-combo-set-atomic-habit-psychology-of-money-rich-dad-original-imah6jhvfshswbee.jpeg?q=70&crop=false","https://m.media-amazon.com/images/I/81Dky+tD+pL._SY522_.jpg","https://m.media-amazon.com/images/I/51T8OXMiB5L._SY445_SX342_.jpg"]
     const product= await prisma.product.create({
         data:{
             userId,
             ...body,
-            images: body.images ? {
-               create: body.images.map((link:string)=>({link}))
-            } : undefined
+            images: { create: imagesUrl.map((link: string) => ({ link: link })) }
         },
-
 
         include: { images: true },
     })
@@ -132,3 +99,28 @@ catch(e){
     })
 }
 })
+
+productRouter.get("/oneProduct",async(c)=>{
+    const id=c.req.query("productId")
+    const prisma=c.get("prisma")
+    try{
+        const product=await prisma.product.findUnique({
+            include:{images:true,user:true},
+            where:{
+                id
+            }
+        })
+        c.status(200)
+        return c.json({
+            product
+        })
+    }
+    catch{
+        c.status(400)
+        return c.json({
+            error:"cannot connect to the database"
+        })
+    }
+})
+
+

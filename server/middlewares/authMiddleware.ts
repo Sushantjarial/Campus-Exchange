@@ -14,9 +14,10 @@ export const authMiddleware = createMiddleware<E>(async (c, next) => {
     const user = await verify(token, c.env.SECRET);
     const userId = String(user.id);
     c.set("userId", userId);
-    c.set("categories",["books","electronics","cycles","others"])
+    c.set("categories",["Stationery","Electronics","Furniture","Others","Books"])
     await next();
   } catch (error) {
+    
     c.status(401);
     return c.json({ error: "invalid token" });
   }
