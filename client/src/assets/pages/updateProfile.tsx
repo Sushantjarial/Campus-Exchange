@@ -100,9 +100,9 @@ const UpdateProfile = () => {
   }
 
   return (
-    <div  className="bg-gradient-to-br  from-gray-800 to-gray-900 ">
+    <div  className="bg-gradient-to-br min-h-screen from-gray-800 to-gray-900 ">
       <NavBarHome></NavBarHome>
-    <div className="max-w-2xl mx-auto h-auto p-6 bg-slate-950 shadow-md rounded-lg mt-6 pb-6 ">
+    <div className="max-w-2xl mx-auto h-auto p-6   bg-gradient-to-br min-h-screen sm:min-h-max from-slate-900 to-slate-950 shadow-md rounded-lg mt-6 pb-6 ">
       <h1 className="text-2xl font-bold mb-6 text-white">Update Profile</h1>
       {message && (
         <div
@@ -115,7 +115,7 @@ const UpdateProfile = () => {
           {message}
         </div>
       )}
-      <form onSubmit={handleSubmit} className="space-y-6 h-auto m-2 ">
+      <form onSubmit={handleSubmit} className="space-y-6 h-auto m-2   rounded-2xl">
         <div>
           <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
             First Name

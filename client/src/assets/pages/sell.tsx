@@ -13,7 +13,9 @@ export default function SellPage() {
         name: z.string(),
         description: z.string(),
         category: z.string(),
-        contactInformation: z.string()
+        contactInformation: z.string(),
+        price: z.string(),
+        images: z.array(z.any())
     })
 
     type formType = {
@@ -49,33 +51,71 @@ export default function SellPage() {
         }));
     };
 
-const handleSubmit = async(e: any) => {
-    e.preventDefault();
-    console.log('Item Details:', formData);
-    const token = localStorage.getItem("token");
-    const {success,error}=productSchema.safeParse(formData)
-    if(!success){
-        console.log(error.issues)
-        console.log("not success")
-        return
-    }
-    if (token) {
-        try {
-             await axios.post(`${BACKEND_URL}/products`, formData, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            toast.success("Product Listed")
-        } catch (error) {
-            console.error('Error submitting form:', error);
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        console.log('Item Details:', formData);
+    
+        const token = localStorage.getItem("token");
+        const { success, error } = productSchema.safeParse(formData);
+        if (!success) {
+            console.log(error.issues);
+            return;
         }
-    } else {
-        console.error('No token found');
-        toast.error("signin first")
-        navigate("/signin")
-    }
-};
+    
+        // Prepare the form data for the product
+        // const productData = {
+        //     name: formData.name,
+        //     category: formData.category,
+        //     contactInformation: formData.contactInformation,
+        //     description: formData.description,
+        //     price: formData.price,
+        //     images:[]
+        // };
+    
+        // Upload images to ImgBB and collect the URLs
+        try {
+            const imageUrls = await Promise.all(
+                formData.images.map(async (image: File) => {
+                    const formDataImage = new FormData();
+                    formDataImage.append("key", "2c1121250e45698d1266e437eba7232c");  // Replace with your ImgBB API key
+                    formDataImage.append("image", image);
+    
+                    const response = await axios.post("https://api.imgbb.com/1/upload", formDataImage, {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    });
+    
+                    return response.data.data.url;  // The uploaded image URL
+                })
+            );
+    
+            // Add the image URLs to product data
+            formData.images = imageUrls;
+    
+            if (token) {
+                try {
+                    // Send product data (including image URLs) to the backend
+                    await axios.post(`${BACKEND_URL}/products`, formData, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    toast.success("Product Listed");
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    toast.error("Error listing product. Please try again.");
+                }
+            } else {
+                console.error('No token found');
+                toast.error("Please sign in first.");
+                navigate("/signin");
+            }
+        } catch (error) {
+            console.error('Error uploading images:', error);
+            toast.error("Error uploading images. Please try again.");
+        }
+    };
+    
+    
 
     return (
         <div
@@ -150,7 +190,7 @@ const handleSubmit = async(e: any) => {
 
 
                     <div>
-                        <label htmlFor="contactInformation" className="block text-black font-medium mb-2">Contact Information (Phn no)</label>
+                        <label htmlFor="contactInformation" className="block text-black font-medium mb-2">Contact Information </label>
                         <input
                             type="text"
                             id="price"
