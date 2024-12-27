@@ -33,6 +33,8 @@ export interface E {
 app.use("/*",cors());
 app.use("/*",prismaMiddleware)
 app.use("/api/v1/products/*",authMiddleware)
+app.use("api/v1/user/userInformation",authMiddleware)
+app.use("api/v1/user/updateUserInformation",authMiddleware)
 
 app.route("api/v1/user",userRouter)
 app.route("api/v1/products",productRouter)

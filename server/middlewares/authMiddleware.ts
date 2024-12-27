@@ -6,7 +6,7 @@ export const authMiddleware = createMiddleware<E>(async (c, next) => {
   if (!jwt) {
     c.status(400);
     return c.json({
-      error: "unauthorized",
+      errormiddle: "unauthorized",
     });
   }
   const token = jwt.split(" ")[1];

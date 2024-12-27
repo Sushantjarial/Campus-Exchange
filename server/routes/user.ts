@@ -123,3 +123,77 @@ userRouter.get("/home",async(c)=>{
         })
     }
 })
+
+userRouter.get('/userInformation',async(c)=>{
+    const userId=c.get("userId")
+    const prisma=c.get("prisma")
+    
+
+    try{
+        const user= await prisma.user.findUnique({
+ select: {
+    firstName: true,
+    lastName: true,
+    email: true,
+    password:true
+ },
+ where: {
+                id:userId
+            }
+        })
+
+        return c.json({
+            user
+        
+        })
+    }
+    catch(e){
+        return c.json({
+            error:e
+        })
+    }
+})
+
+userRouter.put("/updateUserInformation",async(c)=>{
+
+    const prisma=c.get("prisma")
+    const userId=c.get("userId")
+    const body= await c.req.json()
+
+    try{
+
+        const {success,error}=signupInput.safeParse(body);
+        
+        if(!success){
+            c.status(403)
+            return c.json({
+                error:error.issues
+            })
+        }
+
+        const user = await prisma.user.update({
+            where: {
+                id: userId
+            },
+            data:body
+        })
+
+        if (!user) {
+            c.status(404)
+            return c.json({
+                error: "User not found"
+            })
+        }
+        
+        return c.json({
+            message:"updated user information"
+        })
+
+    }
+    catch(e){
+        c.status(400)
+        return c.json({
+            error:e
+        })
+    }
+})

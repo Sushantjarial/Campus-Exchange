@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import NavBarHome from './../components/nav-bar_home';
 import Footer from './../components/footer';
-// import plusIcon from './../images/plus.png'; 
+import plusIcon from './../images/plus.png'; 
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import toast from 'react-hot-toast';
 
 export default function HomePage() {
     type PRODUCT ={
@@ -15,7 +16,7 @@ export default function HomePage() {
         images:[{link:string}]
         price:string
     }
-
+    const token = localStorage.getItem("token");
 const searchProducts = ({searchTerm}:{searchTerm:string})=>{
 const query=searchTerm.toLowerCase().split(/\s+/)
 setSearchTerm(searchTerm)
@@ -45,7 +46,7 @@ setSearchTerm(searchTerm)
 
     useEffect(() => {
         if(!searchTerm){
-        const token = localStorage.getItem("token");
+       
         const fetchProducts = async () => {
             try {
                 const res = await axios.get("https://server.sushantjarial7.workers.dev/api/v1/user/home", {
@@ -135,7 +136,12 @@ setSearchTerm(searchTerm)
             </div>:<></>
                 :(
                     
-                    <div key={product.id} onClick={()=>{navigate(`/oneProduct?id=${product.id}`)}} className="hover:cursor-pointer  transition-all  shadow-blue-500 shadow-sm  border-green-600 hover:shadow-green-500 hover:shadow-xl bg-gray-900 rounded-lg  p-4 flex flex-col items-start font-semibold">
+                    <div key={product.id} onClick={()=>{
+                        if(!token){
+                           toast.error("login required")
+                           return
+                        }
+                        navigate(`/oneProduct?id=${product.id}`)}} className="hover:cursor-pointer  transition-all  shadow-blue-500 shadow-sm  border-green-600 hover:shadow-green-500 hover:shadow-xl bg-gray-900 rounded-lg  p-4 flex flex-col items-start font-semibold">
                         <div className="w-full h-32 bg-gray-900 rounded-md mb-4">
                         <img className='w-full h-32 rounded-lg' src={product.images[0].link} alt={product.name} />
 
@@ -153,15 +159,20 @@ setSearchTerm(searchTerm)
             </div>
 }
              {/* Sell Button */}
-             {/* <div className="fixed bottom-5 right-5 z-50">
+             <div className={ `  fixed bottom-5 right-5 z-50 sm:hidden`}>
                 <button
-            onClick={() => navigate("/sell")}
+            onClick={() =>{ 
+                if(!token){
+                    navigate("/signup")
+                    return
+                  }
+                navigate("/sell")}}
             className="flex items-center justify-center p-3 sm:px-8 sm:opacity-40 bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600 hover:opacity-90"
                 >
                     <img src={plusIcon} alt="Sell" className="w-5 h-5 " />
-                    <span className=" pl-4 px-2 text-xl ">Sell</span>
+                    <span className=" pl-4 px-2 text-xl ">{token?"Sell":"Sign up"}</span>
                 </button>
-            </div> */}
+            </div>
 
             <Footer />
         </div>

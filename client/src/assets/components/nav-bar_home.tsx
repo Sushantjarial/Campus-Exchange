@@ -8,6 +8,7 @@ export default function NavBarHome({
 }: {
   searchProducts?: ({ searchTerm }: { searchTerm: string }) => any;
 }) {
+    const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [profileMenuOpen, setProfileMenuOpen] = useState(false); // For profile dropdown menu
   const [searchTerm, setSearchTerm] = useState("");
@@ -76,11 +77,16 @@ export default function NavBarHome({
           </div>
         </form>
         <button
-          onClick={() => navigate("/sell")}
+          onClick={() =>{
+            if(!token){
+              navigate("/signup")
+              return
+            }
+             navigate("/sell")}}
           className="hidden sm:flex items-center justify-center p-2 mr-8 opacity-80 rounded-full bg-green-500 hover:bg-green-600"
         >
-          <img src={plusIcon} alt="Sell" className="w-5 h-5" />
-          <span className=" pl-4 px-2 text-xl ">Sell</span>
+          <img src={plusIcon} alt="Sell" className={`w-5 h-5 ${token?"":"hidden"}`} />
+          <span className=" pl-4 px-2 text-xl ">{token?"Sell":"Sign up"}</span>
         </button>
 
         {/* Profile Icon and Dropdown */}
@@ -114,7 +120,7 @@ export default function NavBarHome({
               <button
                 onClick={() => {
                   setProfileMenuOpen(false);
-                  navigate("/update-profile");
+                  navigate("/updateProfile");
                 }}
                 className="block w-full text-left px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-blue-600"
               >
