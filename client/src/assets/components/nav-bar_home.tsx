@@ -126,7 +126,7 @@ export default function NavBarHome({
               >
                 Update Profile
               </button>
-              <button
+              {/* <button
                 onClick={() => {
                   setProfileMenuOpen(false);
                   navigate("/settings");
@@ -134,7 +134,7 @@ export default function NavBarHome({
                 className="block w-full text-left px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-blue-600"
               >
                 Settings
-              </button>
+              </button> */}
               <button
                 onClick={() => {
                   setProfileMenuOpen(false);
