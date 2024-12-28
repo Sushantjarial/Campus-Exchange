@@ -10,8 +10,8 @@ export default function Landing() {
     <>
       <NavBar />
       
-      <div className="relative flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-4">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 opacity-85 animate-gradient-move"></div>
+      <div className="relative flex flex-col items-center justify-center h-screen bg-gray-900 text-gray-100 p-4">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 opacity-85 animate-gradient-move"></div>
 
         <div className="z-10 flex flex-col items-center text-center space-y-3 sm:space-y-5 text-2xl sm:text-2xl md:text-5xl font-extrabold ">
           {["Your Campus,", "Your Community,", "Your Marketplace."].map((text, index) => (

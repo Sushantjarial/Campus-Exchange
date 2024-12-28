@@ -13,18 +13,18 @@
   
 export default function About() {
     return ( <div className="">
-      <section id="about-section" className="bg-white dark:bg-gray-800 p-16 text-center pt-20 b-40 ">
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-200  font-sans ">
+      <section id="about-section" className="bg-gray-800 p-16 text-center pt-20 b-40 ">
+        <h2 className="text-4xl md:text-5xl font-bold text-gray-200  font-sans ">
           About Us
         </h2>
-        <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed font-serif pt-10 pb-3">
+        <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed font-serif pt-10 pb-3">
           Welcome to <span className="font-bold text-blue-600">Campus Exchange</span> - a platform created by students, for students! Campus Exchange is designed to make it easier for students to buy, sell, and trade items like textbooks, gadgets, and daily essentials within their college community.
         </p>
-        <p className="mt-6 text-xl md:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed font-serif ">
+        <p className="mt-6 text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed font-serif ">
           We prioritize security and a user-friendly experience, allowing you to connect with trusted peers on campus. Whether you're a freshman or a senior, Campus Exchange helps you find what you need while supporting a sustainable, community-driven marketplace.
         </p>
       </section>
-      <div className="p-32 bg-white dark:bg-gray-800"></div>
+      <div className="p-32 bg-gray-800"></div>
       </div>
     );
 }
