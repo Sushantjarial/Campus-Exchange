@@ -44,7 +44,7 @@ export function OneProduct() {
     return (
         <div>
             <NavBarHome></NavBarHome>
-            <div className="grid grid-cols-1 md:grid-cols-6 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 animate-gradient-move">
+            <div className="grid grid-cols-1 md:grid-cols-6 bg-gradient-to-br from-gray-800 to-gray-900 animate-gradient-move">
 
                 <div className="grid col-span-1 md:col-span-4 mt-4 sm:mb-4 p-4">
                     <ImageSlider images={(product) ? product.images : []}></ImageSlider>
@@ -57,7 +57,6 @@ export function OneProduct() {
                     <div className="h-fit w-full md:w-3/4 flex flex-col items-start bg-gray-900 text-white px-4 rounded-xl">
                         <div className="text-4xl font-bold py-2"> ₹ {product?.price}</div>
                         <p className="text-xl font-thin opacity-70 break-words mb-2"> {product?.name} </p>
-                        <div className="opacity-30">5 sep</div>
                     </div>
                     <div className="h-fit w-full md:w-3/4 bg-gray-70 flex flex-col px-4 bg-gray-900 text-white space rounded-xl">
                         <div className="text-2xl font-bold py-2"> Contact Information</div>
