@@ -1,7 +1,7 @@
- import axios from 'axios';
+//  import axios from 'axios';
 import  { useState } from 'react';
-import { BACKEND_URL } from '../../../config';
-import { z } from 'zod';
+// import { BACKEND_URL } from '../../../config';
+// import { z } from 'zod';
 import toast from 'react-hot-toast'
 import returnIcon from '../images/return.png'
 import { useNavigate } from 'react-router-dom';
@@ -9,14 +9,14 @@ import { useNavigate } from 'react-router-dom';
 
 export default function SellPage() {
     const navigate=useNavigate()
-    const productSchema = z.object({
-        name: z.string(),
-        description: z.string(),
-        category: z.string(),
-        contactInformation: z.string(),
-        price: z.string(),
-        images: z.array(z.any())
-    })
+    // const productSchema = z.object({
+    //     name: z.string(),
+    //     description: z.string(),
+    //     category: z.string(),
+    //     contactInformation: z.string(),
+    //     price: z.string(),
+    //     images: z.array(z.any())
+    // })
 
     type formType = {
         name: string,
@@ -54,13 +54,14 @@ export default function SellPage() {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         console.log('Item Details:', formData);
-    
-        const token = localStorage.getItem("token");
-        const { success, error } = productSchema.safeParse(formData);
-        if (!success) {
-            console.log(error.issues);
-            return;
-        }
+            toast.error("listing product is temporary disabled ")
+            return
+        // const token = localStorage.getItem("token");
+        // const { success, error } = productSchema.safeParse(formData);
+        // if (!success) {
+        //     console.log(error.issues);
+        //     return;
+        // }
     
         // Prepare the form data for the product
         // const productData = {
@@ -73,46 +74,46 @@ export default function SellPage() {
         // };
     
         // Upload images to ImgBB and collect the URLs
-        try {
-            const imageUrls = await Promise.all(
-                formData.images.map(async (image: File) => {
-                    const formDataImage = new FormData();
-                    formDataImage.append("key", "2c1121250e45698d1266e437eba7232c");  // Replace with your ImgBB API key
-                    formDataImage.append("image", image);
+        // try {
+        //     const imageUrls = await Promise.all(
+        //         formData.images.map(async (image: File) => {
+        //             const formDataImage = new FormData();
+        //             formDataImage.append("key", "2c1121250e45698d1266e437eba7232c");  // Replace with your ImgBB API key
+        //             formDataImage.append("image", image);
     
-                    const response = await axios.post("https://api.imgbb.com/1/upload", formDataImage, {
-                        headers: { "Content-Type": "multipart/form-data" },
-                    });
+        //             const response = await axios.post("https://api.imgbb.com/1/upload", formDataImage, {
+        //                 headers: { "Content-Type": "multipart/form-data" },
+        //             });
     
-                    return response.data.data.url;  // The uploaded image URL
-                })
-            );
+        //             return response.data.data.url;  // The uploaded image URL
+        //         })
+        //     );
     
-            // Add the image URLs to product data
-            formData.images = imageUrls;
+        //     // Add the image URLs to product data
+        //     formData.images = imageUrls;
     
-            if (token) {
-                try {
-                    // Send product data (including image URLs) to the backend
-                    await axios.post(`${BACKEND_URL}/products`, formData, {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    });
-                    toast.success("Product Listed");
-                } catch (error) {
-                    console.error('Error submitting form:', error);
-                    toast.error("Error listing product. Please try again.");
-                }
-            } else {
-                console.error('No token found');
-                toast.error("Please sign in first.");
-                navigate("/signin");
-            }
-        } catch (error) {
-            console.error('Error uploading images:', error);
-            toast.error("Error uploading images. Please try again.");
-        }
+        //     if (token) {
+        //         try {
+        //             // Send product data (including image URLs) to the backend
+        //             await axios.post(`${BACKEND_URL}/products`, formData, {
+        //                 headers: {
+        //                     Authorization: `Bearer ${token}`,
+        //                 },
+        //             });
+        //             toast.success("Product Listed");
+        //         } catch (error) {
+        //             console.error('Error submitting form:', error);
+        //             toast.error("Error listing product. Please try again.");
+        //         }
+        //     } else {
+        //         console.error('No token found');
+        //         toast.error("Please sign in first.");
+        //         navigate("/signin");
+        //     }
+        // } catch (error) {
+        //     console.error('Error uploading images:', error);
+        //     toast.error("Error uploading images. Please try again.");
+        // }
     };
     
     
