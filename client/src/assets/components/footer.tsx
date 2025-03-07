@@ -5,7 +5,7 @@ import linkedinIcon from './../images/linkedin_icon.png';
 
 export default function Footer() {
     return (
-        <footer className="bg-gray-300 dark:bg-gray-800 p-8 text-center">
+        <footer className=" dark:bg-gray-800 p-8 text-center">
             <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
                 Connect with Us
             </h3>

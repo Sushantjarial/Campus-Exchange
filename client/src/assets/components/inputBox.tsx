@@ -1,13 +1,14 @@
-export function InputBox({ label, placeholder,onChange,type }:{label:string,placeholder:string,onChange:(e:any)=>void,type?:string}) {
+export function InputBox({ label, placeholder, onChange, type }: { label: string; placeholder: string; onChange: (e: any) => void; type?: string }) {
     return (
-        <div>
-            <div className="text-sm font-medium text-left py-2">
+        <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-300">
                 {label}
-            </div>
-            <input  onChange={onChange}
-                    type={type}
-                placeholder={placeholder} 
-                className="w-full px-2 py-1 border rounded border-slate-400 focus:border-blue-500 outline-none hover:border-blue-500"
+            </label>
+            <input
+                onChange={onChange}
+                type={type}
+                placeholder={placeholder}
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
             />
         </div>
     );

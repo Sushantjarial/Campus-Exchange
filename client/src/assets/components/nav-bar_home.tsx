@@ -113,44 +113,42 @@ export default function NavBarHome({
 
             {/* Dropdown Menu */}
             {profileMenuOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-50  ">
-                <button
-                  onClick={() => {
-                    setProfileMenuOpen(false);
-                    navigate("/mylistings");
-                  }}
-                  className="block w-full text-left px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-blue-600"
-                >
-                  My Listings
-                </button>
-                <button
-                  onClick={() => {
-                    setProfileMenuOpen(false);
-                    navigate("/updateProfile");
-                  }}
-                  className="block w-full text-left px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-blue-600"
-                >
-                  Update Profile
-                </button>
-                {/* <button
-                  onClick={() => {
-                    setProfileMenuOpen(false);
-                    navigate("/settings");
-                  }}
-                  className="block w-full text-left px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-blue-600"
-                >
-                  Settings
-                </button> */}
-                <button
-                  onClick={() => {
-                    setProfileMenuOpen(false);
-                    localStorage.setItem("token","");
-                    navigate("/");
-                  }}
-                  className="block w-full text-left px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-blue-600"
-                >
-                  Log Out
-                </button>
+              <div 
+                className="absolute right-0 mt-2 w-48 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg z-50 transform transition-all duration-200 ease-in-out origin-top-right animate-fade-in"
+                style={{
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+                }}
+              >
+                <div className="py-1">
+                  <button
+                    onClick={() => {
+                      setProfileMenuOpen(false);
+                      navigate("/mylistings");
+                    }}
+                    className="block w-full text-left px-4 py-2.5 text-gray-200 hover:bg-gray-700/50 hover:text-white transition-all duration-150 ease-in-out"
+                  >
+                    My Listings
+                  </button>
+                  <button
+                    onClick={() => {
+                      setProfileMenuOpen(false);
+                      navigate("/updateProfile");
+                    }}
+                    className="block w-full text-left px-4 py-2.5 text-gray-200 hover:bg-gray-700/50 hover:text-white transition-all duration-150 ease-in-out"
+                  >
+                    Update Profile
+                  </button>
+                  <button
+                    onClick={() => {
+                      setProfileMenuOpen(false);
+                      localStorage.setItem("token","");
+                      navigate("/");
+                    }}
+                    className="block w-full text-left px-4 py-2.5 text-gray-200 hover:bg-gray-700/50 hover:text-white transition-all duration-150 ease-in-out"
+                  >
+                    Log Out
+                  </button>
+                </div>
               </div>
             )}
           </div>
