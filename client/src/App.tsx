@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import { OneProduct } from './assets/pages/oneProduct.tsx'
 import MyListings from './assets/pages/mylistings.tsx'
 import UpdateProfile from './assets/pages/updateProfile.tsx'
+import About from './assets/pages/about.tsx'
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
         <Route path='/mylistings' element={<MyListings/>}></Route>
         <Route path='/oneProduct' element={<OneProduct/>}></Route>
         <Route path='/updateProfile' element={<UpdateProfile></UpdateProfile>}></Route>
+        <Route path='/about' element={<About/>}></Route>
 
         
       </Routes>
