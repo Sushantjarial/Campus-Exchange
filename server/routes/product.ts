@@ -14,7 +14,9 @@ productRouter.post("/",async(c)=>{
         description: string(),
         category: string(),
         contactInformation: string(),
-        price:string()
+        price:string(),
+        images:z.array(z.string())
+        
     })
     const prisma=c.get("prisma")
     const userId=c.get("userId")||""
@@ -28,12 +30,15 @@ productRouter.post("/",async(c)=>{
     }
  try{
  
-    const imagesUrl=["https://rukminim2.flixcart.com/image/832/832/xif0q/book/k/c/3/5-books-set-combo-set-atomic-habit-psychology-of-money-rich-dad-original-imah6jhvfshswbee.jpeg?q=70&crop=false","https://m.media-amazon.com/images/I/81Dky+tD+pL._SY522_.jpg","https://m.media-amazon.com/images/I/51T8OXMiB5L._SY445_SX342_.jpg"]
     const product= await prisma.product.create({
-        data:{
+        data: {
             userId,
             ...body,
-            images: { create: imagesUrl.map((link: string) => ({ link: link })) }
+            images: {
+                create: body.images.map((link: string) => ({
+                    link,  // Ensure that the image URLs are passed here
+                }))
+            }
         },
 
         include: { images: true },
