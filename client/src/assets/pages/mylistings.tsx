@@ -68,7 +68,15 @@ const MyListings = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-10">Loading...</div>;
+  
+    return <div >
+        <NavBar></NavBar>
+        <div className=" bg-gradient-to-br min-h-screen from-gray-800 to-gray-900 ">
+          <div className="max-w-4xl  mx-auto p-4">
+            <h1 className="text-2xl text-white  font-bold mb-4">My Listings</h1>
+          </div>
+        </div>
+    </div>;
   }
 
   return (

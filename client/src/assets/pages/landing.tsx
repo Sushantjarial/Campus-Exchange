@@ -8,7 +8,7 @@ export default function Landing() {
 
   return (
     <>
-      <NavBar sign="Signin" />
+      <NavBar sign="Signup" />
       
       {/* Hero Section */}
       <main className="relative min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 scroll-smooth">

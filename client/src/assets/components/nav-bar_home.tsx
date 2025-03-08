@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import logo from "./../images/logo2.png"; // Adjust the path if needed
 import plusIcon from "./../images/plus.png"; // Adjust the path if needed
 import profileIcon from "./../images/profile.png"; // Importing a custom profile icon image
+import toast from "react-hot-toast";
 export default function NavBarHome({
   searchProducts,
   oneProduct
@@ -80,16 +81,21 @@ export default function NavBarHome({
         </form>
 
         {/* Right side buttons */}
-        <div className="flex items-center min-w-[200px] justify-end">
+
+
+        {(!oneProduct)?
+        <div className="flex items-center min-w-[200px]  justify-end">
           <button
             onClick={() => {
               if(!token){
+                toast.error("signup required")
                 navigate("/signup")
+              
                 return
               }
               navigate("/sell")
             }}
-            className="hidden sm:flex items-center justify-center p-2 mr-6 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 transition-all duration-300 text-white shadow-lg hover:shadow-green-500/30"
+            className="hidden sm:flex items-center  justify-center p-2 mr-12 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 transition-all duration-300 text-white shadow-lg hover:shadow-green-500/30"
           >
             <img src={plusIcon} alt="Sell" className={`w-5 h-5 ${token?"":"hidden"}`} />
             <span className="pl-2 px-2 font-medium">{token?"Sell":"Sign up"}</span>
@@ -101,7 +107,7 @@ export default function NavBarHome({
             ref={profileMenuRef}
           >
             <button
-              onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+              onClick={() => {if(!token){toast.error("signup required"); navigate("/signup")}else{ setProfileMenuOpen(!profileMenuOpen)}}}
               className="focus:outline-none"
             >
               <img
@@ -112,9 +118,9 @@ export default function NavBarHome({
             </button>
 
             {/* Dropdown Menu */}
-            {profileMenuOpen && (
+            {profileMenuOpen &&  (
               <div 
-                className="absolute right-0 mt-2 w-48 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg z-50 transform transition-all duration-200 ease-in-out origin-top-right animate-fade-in"
+                className="absolute right-0 mt-2 w-48 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg z-50  transition-all duration-200 ease-in-out origin-top-right animate-fade-in"
                 style={{
                   boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
                 }}
@@ -141,7 +147,7 @@ export default function NavBarHome({
                   <button
                     onClick={() => {
                       setProfileMenuOpen(false);
-                      localStorage.setItem("token","");
+                      localStorage.removeItem("token");
                       navigate("/");
                     }}
                     className="block w-full text-left px-4 py-2.5 text-gray-200 hover:bg-gray-700/50 hover:text-white transition-all duration-150 ease-in-out"
@@ -152,7 +158,12 @@ export default function NavBarHome({
               </div>
             )}
           </div>
+        </div>:<div>
+          <button onClick={()=>toast.loading("Comming Soon",{duration:1000})} className="hidden sm:flex items-center  justify-center p-2 mr-8 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 transition-all duration-300 text-white shadow-lg hover:shadow-green-500/30">
+            <span className="pl-2 px-2 font-medium">{"Message Seller"}</span>
+          </button>
         </div>
+        }
       </div>
 
       {/* Mobile Profile Button - Visible Only on Small Screens */}

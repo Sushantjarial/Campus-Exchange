@@ -37,13 +37,15 @@ export default function About() {
   
   return (
     <div className="">
-      <NavBar sign="Signin" about={true} />
-      <section id="about-section" className="bg-gray-800 p-16 text-center pt-20 b-40 w-full h-screen flex flex-col items-center justify-center">
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-200 font-sans animate-on-scroll opacity-0 transition-all duration-1000 transform translate-y-10" 
-            style={{ animationDelay: "200ms" }}>
+      <NavBar sign="Signup" about={true} />
+      <section id="about-section" className="bg-gray-800 p-16 text-center pt-10 b-40 w-full h-screen flex flex-col items-center justify-center">
+        <h2 className="text-4xl md:text-5xl font-bold  font-sans animate-on-scroll opacity-0 transition-all duration-1000 transform translate-y-10 
+         bg-clip-text bg-gradient-to-r from-blue-500 to-purple-400 via-pink-500 text-transparent"
+          
+          style={{ animationDelay: "200ms" }}>
           About Us
         </h2>
-        <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed font-serif pt-10 pb-3 animate-on-scroll  transform translate-y-10"
+        <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed font-serif md:pt-10 pt-40  pb-3 animate-on-scroll  transform translate-y-10"
            style={{ animationDelay: "400ms" }}>
           Welcome to <span className="  font-bold text-blue-600">Campus Exchange</span> - a platform created by students, for students! Campus Exchange is designed to make it easier for students to buy, sell, and trade items like textbooks, gadgets, and daily essentials within their college community.
         </p>

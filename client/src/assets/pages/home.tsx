@@ -163,7 +163,8 @@ export default function HomePage() {
     return (
         <div className='min-h-screen bg-gray-900'>
             <div className='fixed top-0 left-0 right-0 z-20 bg-gray-900 border-b border-gray-800'>
-                <NavBarHome searchProducts={searchProducts} />
+                <NavBarHome 
+                 searchProducts={searchProducts} />
             </div>
 
             <div className="pt-16 min-h-screen">
@@ -243,7 +244,7 @@ const FloatingButton = React.memo(({ token, navigate }: {
 }) => (
     <button
         onClick={() => navigate(token ? "/sell" : "/signup")}
-        className="fixed bottom-5 right-4 z-50 sm:hidden flex items-center justify-center p-3 bg-blue-600 text-white rounded-full shadow-lg"
+        className="fixed bottom-5 right-4 z-50 sm:hidden flex items-center justify-center p-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full shadow-lg"
     >
         <img src={plusIcon} alt="Sell" className="w-5 h-5" />
         <span className="pl-2 font-medium">{token ? "Sell" : "Sign up"}</span>

@@ -1,41 +1,36 @@
- import axios from 'axios';
-import  { useState } from 'react';
+import axios from 'axios';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { BACKEND_URL } from '../../../config';
 import { z } from 'zod';
 import toast from 'react-hot-toast'
 import returnIcon from '../images/return.png'
 import { useNavigate } from 'react-router-dom';
-
+import compress from 'browser-image-compression'
 
 export default function SellPage() {
-    const navigate=useNavigate()
+    const navigate = useNavigate()
+    
     const productSchema = z.object({
-        name: z.string(),
-        description: z.string(),
-        category: z.string(),
-        contactInformation: z.string(),
-        price: z.string(),
-        images: z.array(z.any())
+        name: z.string().min(1, "Name is required"),
+        description: z.string().min(1, "Description is required"),
+        category: z.string().min(1, "Category is required"),
+        contactInformation: z.string().min(1, "Contact information is required"),
+        price: z.string().min(1, "Price is required"),
+        images: z.array(z.any()).min(1, "At least one image is required")
     })
 
-    type formType = {
-        name: string,
-        category: string,
-        contactInformation: string,
-        price: string,
-        description: string,
-        images: any[]
-    }
-    const [formData, setFormData] = useState<formType>({
+    type FormType = z.infer<typeof productSchema>;
+
+    const [formData, setFormData] = useState<FormType>({
         name: '',
         category: '',
         contactInformation: '',
         description: '',
-        price:'',
-        images: [], // Store multiple images
+        price: '',
+        images: [],
     });
 
-    const handleChange = (e: any) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
@@ -43,71 +38,105 @@ export default function SellPage() {
         }));
     };
 
-    const handleImageUpload = (e: any) => {
+    const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files) return;
+        
         const files = Array.from(e.target.files);
-        setFormData((prevData: formType) => ({
+        
+        // Validate file types and sizes
+        const validFiles = files.filter(file => {
+            const isValidType = file.type.startsWith('image/');
+            const isValidSize = file.size <= 5 * 1024 * 1024; // 5MB limit
+            
+            if (!isValidType) {
+                toast.error(`${file.name} is not a valid image file`);
+            }
+            if (!isValidSize) {
+                toast.error(`${file.name} exceeds 5MB size limit`);
+            }
+            
+            return isValidType && isValidSize;
+        });
+
+        setFormData((prevData) => ({
             ...prevData,
-            images: [...prevData.images, ...files], // Append new files to the existing array
+            images: [...prevData.images, ...validFiles],
         }));
     };
 
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Item Details:', formData);
-            
-        const token = localStorage.getItem("token");
-        const { success, error } = productSchema.safeParse(formData);
-        if (!success) {
-            console.log(error.issues);
-            return;
-        }
-    
-    
-        // Upload images to ImgBB and collect the URLs
+        
         try {
-            const imageUrls = await Promise.all(
-                formData.images.map(async (image: File) => {
-                    const formDataImage = new FormData();
-                    formDataImage.append("key", "2c1121250e45698d1266e437eba7232c");  // Replace with your ImgBB API key
-                    formDataImage.append("image", image);
-    
-                    const response = await axios.post("https://api.imgbb.com/1/upload", formDataImage, {
-                        headers: { "Content-Type": "multipart/form-data" },
-                    });
-    
-                    return response.data.data.url;  // The uploaded image URL
-                })
-            );
-    
-        // Add the image URLs to product data
+            // Validate form data
+            if(formData.images.length>3){
+                toast.error("You can only upload up to 3 images");
+                return;
+            }
+            const validationResult = productSchema.safeParse(formData);
+            if (!validationResult.success) {
+                const errors = validationResult.error.errors;
+                errors.forEach(error => toast.error(error.message));
+                return;
+            }
 
-            formData.images = imageUrls;
-    
-            if (token) {
-                try {
-                    // Send product data (including image URLs) to the backend
-                    await axios.post(`${BACKEND_URL}/products`, formData, {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    });
-                    toast.success("Product Listed");
-                } catch (error) {
-                    console.error('Error submitting form:', error);
-                    toast.error("Error listing product. Please try again.");
-                }
-            } else {
-                console.error('No token found');
+            // Compress images
+            const compressedImages = await compressImage(formData.images);
+            
+            const token = localStorage.getItem("token");
+            if (!token) {
                 toast.error("Please sign in first.");
                 navigate("/signin");
+                return;
             }
+
+            // Upload images to Cloudinary
+            const imageUrls = await Promise.all(
+                compressedImages.map(async (img) => {
+                    const formImage = new FormData();
+                    formImage.append("file", img);
+                    formImage.append("upload_preset", "campus-exchange");
+                    formImage.append("cloud_name", "dnkohht9o");
+                    
+                    const response = await axios.post(
+                        "https://api.cloudinary.com/v1_1/dnkohht9o/image/upload",
+                        formImage
+                    );
+                    return response.data.url;
+                })
+            );
+            console.log("imageUrls" + imageUrls)
+            formData.images = imageUrls
+            // Send product data to backend
+            await axios.post(
+                `${BACKEND_URL}/products`,
+                { name:formData.name,
+                    category:formData.category,
+                    contactInformation:formData.contactInformation,
+                    description:formData.description,
+                    price:formData.price,
+                    images:formData.images
+                 },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                       
+                    },
+                }
+            );
+            
+            toast.success("Product Listed Successfully");
+            navigate("/home"); // Redirect after successful submission
+            
         } catch (error) {
-            console.error('Error uploading images:', error);
-            toast.error("Error uploading images. Please try again.");
+            console.error('Error:', error);
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message || "Error listing product. Please try again.");
+            } else {
+                toast.error("An unexpected error occurred. Please try again.");
+            }
         }
     };
-    
-    
 
     return (
         <div
@@ -185,7 +214,7 @@ export default function SellPage() {
                         <label htmlFor="contactInformation" className="block text-black font-medium mb-2">Contact Information </label>
                         <input
                             type="text"
-                            id="price"
+                            id="contactInformation"
                             name="contactInformation"
                             min={1}
                             value={formData.contactInformation}
@@ -251,3 +280,29 @@ export default function SellPage() {
     );
 }
 
+async function compressImage(images: File[]) {
+    const options = {
+        maxSizeMB: 0.5,
+        maxWidthOrHeight: 800,
+        useWebWorker: true,
+    };
+    console.log(images)
+
+    try {
+        const compressedImages = await Promise.all(
+            images.map(async (img) => {
+                try {
+                    return await compress(img, options);
+                } catch (error) {
+                    console.error(`Error compressing image ${img.name}:`, error);
+                    throw new Error(`Failed to compress image ${img.name}`);
+                }
+            })
+        );
+        console.log(compressedImages)
+        return compressedImages;
+    } catch (error) {
+        console.error('Image compression failed:', error);
+        throw new Error('Failed to compress images. Please try again.');
+    }
+}
