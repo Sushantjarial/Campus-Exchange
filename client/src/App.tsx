@@ -11,6 +11,7 @@ import { OneProduct } from './assets/pages/oneProduct.tsx'
 import MyListings from './assets/pages/mylistings.tsx'
 import UpdateProfile from './assets/pages/updateProfile.tsx'
 import About from './assets/pages/about.tsx'
+import Edit from './assets/pages/edit.js'
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
         <Route path='/oneProduct' element={<OneProduct/>}></Route>
         <Route path='/updateProfile' element={<UpdateProfile></UpdateProfile>}></Route>
         <Route path='/about' element={<About/>}></Route>
+        <Route path='/edit' element={<Edit/>}></Route>
 
         
       </Routes>
