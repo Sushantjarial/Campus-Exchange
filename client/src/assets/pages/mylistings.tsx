@@ -103,12 +103,6 @@ const MyListings = () => {
               </div>
               <div className="flex gap-2">
                 <button
-                  onClick={() => handleEdit(listing.id)}
-                  className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                >
-                  Edit
-                </button>
-                <button
                   onClick={() => handleDelete(listing.id)}
                   className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600"
                 >
