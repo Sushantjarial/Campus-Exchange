@@ -60,13 +60,6 @@ const MyListings = () => {
     }
   };
 
-  const handleEdit = (id:string) => {
-    // Redirect to edit page or open a modal for editing
-    console.log(`Edit listing with ID: ${id}`);
-    // Example: Navigate to edit page
-    window.location.href = `/edit-listing/${id}`;
-  };
-
   if (loading) {
   
     return <div >
