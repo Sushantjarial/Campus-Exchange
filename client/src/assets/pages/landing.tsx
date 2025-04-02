@@ -61,7 +61,7 @@ export default function Landing() {
               <span className="text-sm">Support</span>
             </div>
             <div className="flex flex-col items-center">
-              <span className="text-2xl font-bold text-white">1000+</span>
+              <span className="text-2xl font-bold text-white">100+</span>
               <span className="text-sm">Active Users</span>
             </div>
             <div className="flex flex-col items-center">
@@ -98,11 +98,11 @@ export default function Landing() {
               </h2>
               <p className="text-lg text-gray-600 dark:text-gray-300">
                 Campus Exchange was founded with a simple mission: to create a sustainable, 
-                community-driven marketplace for college students. We believe in the power of 
+                community-driven marketplace for  students in the RJIT campus. We believe in the power of 
                 peer-to-peer commerce and the positive impact it can have on campus life.
               </p>
               <p className="text-lg text-gray-600 dark:text-gray-300">
-                Our platform connects students across campuses, making it easy to buy, sell, 
+                Our platform connects students across campus, making it easy to buy, sell, 
                 and trade items while building lasting connections within your college community.
               </p>
               <div className="flex gap-4">
@@ -155,7 +155,7 @@ export default function Landing() {
               },
               {
                 title: "Complete the Sale",
-                description: "Meet up on campus, exchange items, and get paid instantly through our secure payment system. Simple and safe!",
+                description: "Meet up on campus, exchange items, and get paid. Simple!",
                 icon: "🤝",
                 image: "/students3.webp"
               }

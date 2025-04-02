@@ -114,11 +114,11 @@ export function Signup() {
           {/* Trust Indicators */}
           <div className="grid grid-cols-2 gap-4 pt-4">
             <div className="bg-white/5 backdrop-blur-sm rounded-lg p-4 text-center hover:bg-white/10 transition-colors duration-300 group">
-              <div className="text-2xl font-bold text-blue-400 group-hover:scale-110 transition-transform duration-300">1000+</div>
+              <div className="text-2xl font-bold text-blue-400 group-hover:scale-110 transition-transform duration-300">100+</div>
               <div className="text-sm text-gray-400">Active Users</div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm rounded-lg p-4 text-center hover:bg-white/10 transition-colors duration-300 group">
-              <div className="text-2xl font-bold text-blue-400 group-hover:scale-110 transition-transform duration-300">500+</div>
+              <div className="text-2xl font-bold text-blue-400 group-hover:scale-110 transition-transform duration-300">5+</div>
               <div className="text-sm text-gray-400">Daily Listings</div>
             </div>
           </div>

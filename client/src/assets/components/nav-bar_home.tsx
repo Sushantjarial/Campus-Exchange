@@ -150,7 +150,7 @@ export default function NavBarHome({
                       localStorage.removeItem("token");
                       navigate("/");
                     }}
-                    className="block w-full text-left px-4 py-2.5 text-gray-200 hover:bg-gray-700/50 hover:text-white transition-all duration-150 ease-in-out"
+                    className="block w-full text-left px-4 py-2.5 text-red-400 hover:bg-gray-700/50 hover:text-red-500 transition-all duration-150 ease-in-out"
                   >
                     Log Out
                   </button>
