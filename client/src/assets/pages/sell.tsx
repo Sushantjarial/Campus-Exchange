@@ -1,14 +1,16 @@
 import axios from 'axios';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { BACKEND_URL } from '../../../config';
-import { z } from 'zod';
+import {  z } from 'zod';
 import toast from 'react-hot-toast'
 import returnIcon from '../images/return.png'
 import { useNavigate } from 'react-router-dom';
 import compress from 'browser-image-compression'
 
+
 export default function SellPage() {
     const navigate = useNavigate()
+    const [issubmitting, setIssubmitting] = useState(false)
     
     const productSchema = z.object({
         name: z.string().min(1, "Name is required"),
@@ -89,7 +91,7 @@ export default function SellPage() {
                 navigate("/signin");
                 return;
             }
-
+            setIssubmitting(true)
             // Upload images to Cloudinary
             const imageUrls = await Promise.all(
                 compressedImages.map(async (img) => {
@@ -124,8 +126,10 @@ export default function SellPage() {
                     },
                 }
             );
-            
-            toast.success("Product Listed Successfully");
+            setIssubmitting(false)
+            toast.success("Product Listed Successfully , it will be visible to other users after admin approval.",{
+                duration: 7000,
+            });
             navigate("/home"); // Redirect after successful submission
             
         } catch (error) {
@@ -141,11 +145,11 @@ export default function SellPage() {
     return (
         <div
             id="bg-image"
-            className="bg-cover  bg-[url('https://images.unsplash.com/photo-1470790376778-a9fbc86d70e2?q=80&w=1408&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] flex items-center justify-center"
+            className="bg-cover  bg-[url('https://images.pexels.com/photos/333850/pexels-photo-333850.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')] flex items-center justify-center"
         >
             <div
                 id="front"
-                className="w-full max-w-lg p-8  bg-white rounded-lg"
+                className="w-full max-w-lg p-8  bg-slate-300 rounded-lg"
             >
                 <img src={returnIcon}  onClick={()=>navigate("/home")} className='w-10 h-10 hover:scale-105 transition-all hover:cursor-pointer '></img>
                 <h2 className="text-2xl font-semibold text-black text-center mb-6">Sell Your Item</h2>
@@ -271,8 +275,8 @@ export default function SellPage() {
                     </div>
 
                     {/* Submit Button */}
-                    <button type="submit" className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        Submit
+                    <button type="submit" disabled={issubmitting} className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700  focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        {issubmitting ? "Submitting..." : "Submit"}
                     </button>
                 </form>
             </div>

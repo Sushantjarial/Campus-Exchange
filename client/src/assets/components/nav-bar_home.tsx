@@ -53,7 +53,7 @@ export default function NavBarHome({
           className="flex items-center space-x-3 hover:cursor-pointer min-w-[120px] transition-transform hover:scale-105"
         >
           <img src={logo} className="w-8 h-8 sm:w-10 sm:h-10 mx-2" alt="Logo" />
-          <div className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-white  text-transparent bg-clip-text">
+          <div className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-white to-white text-transparent bg-clip-text">
             Campus Exchange
           </div>
         </Link>

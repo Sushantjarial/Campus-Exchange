@@ -8,13 +8,10 @@ import toast from 'react-hot-toast';
 import React from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 
-// Replace the debounce utility to avoid NodeJS type error
 
 
-// Add these constants at the top of the file
 const ITEMS_PER_PAGE = 12;
 
-// Add at the top of the file, after imports
 type PRODUCT = {
     id: string,
     name: string,
@@ -25,7 +22,6 @@ type PRODUCT = {
     price: string
 }
 
-// Update the scrollToTop utility function
 const scrollToTop = () => {
     const productGrid = document.getElementById('product-grid');
     if (productGrid) {
