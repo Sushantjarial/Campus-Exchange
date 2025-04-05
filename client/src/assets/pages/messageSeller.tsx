@@ -3,7 +3,6 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../../../config";
 import axios from "axios";
-import { div } from "framer-motion/client";
 import NavBarHome from "../components/nav-bar_home";
 
 export default function MessageSeller() {
