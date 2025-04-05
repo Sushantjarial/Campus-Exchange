@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ImageSlider } from "../components/imageSlider";
 import NavBarHome from "../components/nav-bar_home";
 import logo from './../images/profile.png';
@@ -7,6 +7,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../../../config";
 
 export function OneProduct() {
+    const navigate=useNavigate()
     const [searchParms] = useSearchParams();
     const id = searchParms.get("id");
     const [product, setProduct] = useState<productType>()
@@ -20,6 +21,7 @@ export function OneProduct() {
         price: string
         contactInformation: string,
         user: {
+            id: string,
             firstName: string,
             lastName: string
         }
@@ -45,7 +47,7 @@ export function OneProduct() {
 
     return (
         <div className="min-h-screen  bg-gradient-to-br from-gray-800 to-gray-900">
-            <NavBarHome oneProduct={true}></NavBarHome>
+            <NavBarHome sellerId={product?.user.id} oneProduct={true}></NavBarHome>
             <div className="grid grid-cols-1 md:grid-cols-6 gap-6 max-w-7xl mx-auto px-4 py-6">
                 <div className="grid col-span-1 md:col-span-4">
                     <ImageSlider images={(product) ? product.images : []}></ImageSlider>
@@ -86,6 +88,9 @@ export function OneProduct() {
                         </div>
                         <div className={`overflow-hidden transition-all duration-300 ${showContactInfo ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
                             <p className="text-lg text-gray-300 break-words">{product?.contactInformation}</p>
+                            <button onClick={()=>{navigate(`/messageSeller?recieverId=${product?.user.id}`)}} className=" mt-2 sm:flex items-center  justify-center p-2 mr-8 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 transition-all duration-300 text-white shadow-lg hover:shadow-green-500/30">
+            <span className="pl-2 px-2 font-medium">{"Message Seller"}</span>
+          </button>
                         </div>
                     </div>
 

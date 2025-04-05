@@ -6,10 +6,14 @@ import profileIcon from "./../images/profile.png"; // Importing a custom profile
 import toast from "react-hot-toast";
 export default function NavBarHome({
   searchProducts,
-  oneProduct
+  oneProduct,
+  sellerId,
+  messageSeller
 }: {
   searchProducts?: ({ searchTerm }: { searchTerm: string }) => any;
+  sellerId?: string;
   oneProduct?: boolean
+  messageSeller? :boolean
 }) {
     const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -63,7 +67,7 @@ export default function NavBarHome({
           onSubmit={handleSearch}
           className={`hidden md:flex flex-1 justify-center items-center max-w-3xl mx-auto px-4`}
         >
-          <div className={`flex space-x-4 w-full ${oneProduct?"hidden":"block"}`}>
+          <div className={`flex space-x-4 w-full ${oneProduct||messageSeller?"hidden":"block"}`}>
             <input
               type="text"
               value={searchTerm}
@@ -159,8 +163,9 @@ export default function NavBarHome({
             )}
           </div>
         </div>:<div>
-          <button onClick={()=>toast.loading("Comming Soon",{duration:1000})} className="hidden sm:flex items-center  justify-center p-2 mr-8 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 transition-all duration-300 text-white shadow-lg hover:shadow-green-500/30">
-            <span className="pl-2 px-2 font-medium">{"Message Seller"}</span>
+          <button onClick={()=>{navigate(`/messageSeller?recieverId=${sellerId}`)}} className="  sm:flex items-center  justify-center p-2 sm:mr-4 ml-8 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 transition-all duration-300 text-white shadow-lg hover:shadow-green-500/30">
+          <span className="hidden sm:flex pl-2 px-2 font-medium">{"Message Seller"}</span>
+          <span className="sm:hidden flex pl-2 px-2 font-medium">{"Message"}</span>
           </button>
         </div>
         }

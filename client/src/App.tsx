@@ -12,6 +12,7 @@ import MyListings from './assets/pages/mylistings.tsx'
 import UpdateProfile from './assets/pages/updateProfile.tsx'
 import About from './assets/pages/about.tsx'
 import Edit from './assets/pages/edit.js'
+import MessageSeller from './assets/pages/messageSeller.tsx'
 
 function App() {
 
@@ -30,7 +31,8 @@ function App() {
         <Route path='/updateProfile' element={<UpdateProfile></UpdateProfile>}></Route>
         <Route path='/about' element={<About/>}></Route>
         <Route path='/edit' element={<Edit/>}></Route>
-
+        <Route path='/messageSeller' element={<MessageSeller/>}></Route>
+         <Route path='*' element={<h1>404 Not Found</h1>}></Route>
         
       </Routes>
     
