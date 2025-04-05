@@ -7,6 +7,7 @@ import { prismaMiddleware } from "../middlewares/prismaMiddleware";
 import { authMiddleware } from "../middlewares/authMiddleware";
 import { userRouter } from "../routes/user";
 import { productRouter } from "../routes/product";
+import { messageRouter } from '../routes/message';
 
 const prismaExtended = new PrismaClient().$extends(withAccelerate());
 type ExtendedPrismaClient = typeof prismaExtended;
@@ -35,7 +36,8 @@ app.use("/*",prismaMiddleware)
 app.use("/api/v1/products/*",authMiddleware)
 app.use("api/v1/user/userInformation",authMiddleware)
 app.use("api/v1/user/updateUserInformation",authMiddleware)
-
+app.use("api/v1/message/*",authMiddleware)
+app.route("api/v1/message",messageRouter)
 app.route("api/v1/user",userRouter)
 app.route("api/v1/products",productRouter)
 

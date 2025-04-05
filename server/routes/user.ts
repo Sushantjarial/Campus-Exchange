@@ -110,7 +110,7 @@ userRouter.get("/home",async(c)=>{
                 price:true,
                 images: true,
             },
-            where: category ? { category } : {},
+            where: category ? { category, hidden: false } : { hidden: false },
         })
         return c.json({
             products
@@ -118,8 +118,10 @@ userRouter.get("/home",async(c)=>{
     }
     catch(e){
         c.status(500)
+        console.log(e)
         return c.json({
             error:"error while fetching products"
+            
         })
     }
 })

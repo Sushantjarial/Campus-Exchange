@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { E } from "../src";
-import z, { number, string } from "zod"
+import z, {  string } from "zod"
 
 export const productRouter=new Hono<E>();
 

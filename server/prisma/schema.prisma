@@ -14,18 +14,26 @@ model User {
   email     String    @unique
   password  String
   products  Product[]
+  sentMessages Message[] @relation("sender")
+  recievedMessages Message[] @relation("reciever")
+  createdAt DateTime? @default(now())
+  knownUsers User[] @relation("knownUsers")
+  knownByUsers User[] @relation("knownUsers")
+
 }
 
 model Product {
-  id                 String  @id @default(uuid())
+  id                 String   @id @default(uuid())
   name               String
   description        String
   category           String
   userId             String?
-  price              String?
   contactInformation String
+  price              String?
+  hidden             Boolean? @default(true)
   images             Image[]
-  user               User?   @relation(fields: [userId], references: [id])
+  user               User?    @relation(fields: [userId], references: [id])
+  createdAt         DateTime? @default(now())
 }
 
 model Image {
@@ -33,4 +41,15 @@ model Image {
   link      String
   productId String?
   product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime? @default(now())
+}
+
+model Message {
+  id Int @id @default(autoincrement())
+  content String
+  senderId  String
+  recieverId String
+  sender User @relation( "sender" ,fields: [senderId],references: [id])
+  reciever User @relation ("reciever", fields: [recieverId],references: [id])
+  createdAt  DateTime? @default(now())
 }
