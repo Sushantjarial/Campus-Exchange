@@ -31,7 +31,7 @@ export default function MessageSeller() {
         if(messages.length>0){
     setTimeout(scrollIntoView,100)
         }
-    },[messages])
+    },[messages.length])
 
     const sendMessage = async () => {
         const token = localStorage.getItem("token");
@@ -59,7 +59,7 @@ export default function MessageSeller() {
             );
 
             setMessages((prev) => [...prev, res.data.message]);
-            contentref.current.value = ""; // Clear the input field after sending
+            contentref.current.value = ""; 
         } catch (e) {
             console.log(e);
             toast.error("Failed to send message");
@@ -90,7 +90,15 @@ export default function MessageSeller() {
                 console.log(e);
             }
         };
-        fetchMessages();
+       
+       const intervalid= setInterval(()=>fetchMessages(),5000)
+
+
+        return(
+            () => {
+                clearInterval(intervalid);
+            }
+        )
     }, []);
 
     return (
