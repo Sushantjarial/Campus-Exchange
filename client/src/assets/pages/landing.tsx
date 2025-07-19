@@ -11,14 +11,14 @@ export default function Landing() {
       <NavBar sign="Signup" />
       
       {/* Hero Section */}
-      <main className="relative min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 scroll-smooth">
+      <main className="relative pt-8  min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 scroll-smooth">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
         </div>
 
         {/* Content */}
-        <div className="relative container mx-auto px-4 h-screen flex flex-col justify-center items-center text-center">
+        <div className="relative container mx-auto px-4 h-[100vh] flex flex-col justify-center items-center text-center">
           {/* Main Heading */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
             <span className="block mb-2">Your Campus,</span>
