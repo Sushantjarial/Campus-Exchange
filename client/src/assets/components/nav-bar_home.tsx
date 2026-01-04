@@ -7,15 +7,14 @@ import toast from "react-hot-toast";
 export default function NavBarHome({
   searchProducts,
   oneProduct,
-  sellerId,
-  messageSeller
+  messageSeller,
 }: {
   searchProducts?: ({ searchTerm }: { searchTerm: string }) => any;
   sellerId?: string;
-  oneProduct?: boolean
-  messageSeller? :boolean
+  oneProduct?: boolean;
+  messageSeller?: boolean;
 }) {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [profileMenuOpen, setProfileMenuOpen] = useState(false); // For profile dropdown menu
   const [searchTerm, setSearchTerm] = useState("");
@@ -67,7 +66,11 @@ export default function NavBarHome({
           onSubmit={handleSearch}
           className={`hidden md:flex flex-1 justify-center items-center max-w-3xl mx-auto px-4`}
         >
-          <div className={`flex space-x-4 w-full ${oneProduct||messageSeller?"hidden":"block"}`}>
+          <div
+            className={`flex space-x-4 w-full ${
+              oneProduct || messageSeller ? "hidden" : "block"
+            }`}
+          >
             <input
               type="text"
               value={searchTerm}
@@ -86,89 +89,100 @@ export default function NavBarHome({
 
         {/* Right side buttons */}
 
-
-        {(!oneProduct)?
-        <div className="flex items-center min-w-[200px]  justify-end">
-          <button
-            onClick={() => {
-              if(!token){
-                toast.error("signup required")
-                navigate("/signup")
-              
-                return
-              }
-              navigate("/sell")
-            }}
-            className="hidden sm:flex items-center  justify-center p-2 mr-12 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 transition-all duration-300 text-white shadow-lg hover:shadow-green-500/30"
-          >
-            <img src={plusIcon} alt="Sell" className={`w-5 h-5 ${token?"":"hidden"}`} />
-            <span className="pl-2 px-2 font-medium">{token?"Sell":"Sign up"}</span>
-          </button>
-
-          {/* Profile Icon and Dropdown */}
-          <div
-            className="relative text-gray-800 dark:text-gray-200 mr-2 "
-            ref={profileMenuRef}
-          >
+        <div className="flex items-center min-w-[200px] justify-end">
+          {!oneProduct && (
             <button
-              onClick={() => {if(!token){toast.error("signup required"); navigate("/signup")}else{ setProfileMenuOpen(!profileMenuOpen)}}}
-              className="focus:outline-none"
+              onClick={() => {
+                if (!token) {
+                  toast.error("signup required");
+                  navigate("/signup");
+
+                  return;
+                }
+                navigate("/sell");
+              }}
+              className="hidden sm:flex items-center justify-center p-2 mr-12 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 transition-all duration-300 text-white shadow-lg hover:shadow-green-500/30"
             >
               <img
-                src={profileIcon}
-                alt="Profile"
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full"
+                src={plusIcon}
+                alt="Sell"
+                className={`w-5 h-5 ${token ? "" : "hidden"}`}
               />
+              <span className="pl-2 px-2 font-medium">
+                {token ? "Sell" : "Sign up"}
+              </span>
             </button>
+          )}
 
-            {/* Dropdown Menu */}
-            {profileMenuOpen &&  (
-              <div 
-                className="absolute right-0 mt-2 w-48 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg z-50  transition-all duration-200 ease-in-out origin-top-right animate-fade-in"
-                style={{
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+          {/* Profile Icon and Dropdown - Hidden on mobile only on oneProduct page */}
+          <div className={oneProduct ? "hidden sm:block" : "block"}>
+            <div
+              className="relative text-gray-800 dark:text-gray-200 mr-2"
+              ref={profileMenuRef}
+            >
+              <button
+                onClick={() => {
+                  if (!token) {
+                    toast.error("signup required");
+                    navigate("/signup");
+                  } else {
+                    setProfileMenuOpen(!profileMenuOpen);
+                  }
                 }}
+                className="focus:outline-none"
               >
-                <div className="py-1">
-                  <button
-                    onClick={() => {
-                      setProfileMenuOpen(false);
-                      navigate("/mylistings");
-                    }}
-                    className="block w-full text-left px-4 py-2.5 text-gray-200 hover:bg-gray-700/50 hover:text-white transition-all duration-150 ease-in-out"
-                  >
-                    My Listings
-                  </button>
-                  <button
-                    onClick={() => {
-                      setProfileMenuOpen(false);
-                      navigate("/updateProfile");
-                    }}
-                    className="block w-full text-left px-4 py-2.5 text-gray-200 hover:bg-gray-700/50 hover:text-white transition-all duration-150 ease-in-out"
-                  >
-                    Update Profile
-                  </button>
-                  <button
-                    onClick={() => {
-                      setProfileMenuOpen(false);
-                      localStorage.removeItem("token");
-                      navigate("/");
-                    }}
-                    className="block w-full text-left px-4 py-2.5 text-red-400 hover:bg-gray-700/50 hover:text-red-500 transition-all duration-150 ease-in-out"
-                  >
-                    Log Out
-                  </button>
+                <img
+                  src={profileIcon}
+                  alt="Profile"
+                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full"
+                />
+              </button>
+
+              {/* Dropdown Menu */}
+              {profileMenuOpen && (
+                <div
+                  className="absolute right-0 mt-2 w-48 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-lg z-50 transition-all duration-200 ease-in-out origin-top-right animate-fade-in"
+                  style={{
+                    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
+                  }}
+                >
+                  <div className="py-1">
+                    <button
+                      onClick={() => {
+                        setProfileMenuOpen(false);
+                        navigate("/mylistings");
+                      }}
+                      className="block w-full text-left px-4 py-2.5 text-gray-200 hover:bg-gray-700/50 hover:text-white transition-all duration-150 ease-in-out"
+                    >
+                      My Listings
+                    </button>
+                    <button
+                      onClick={() => {
+                        setProfileMenuOpen(false);
+                        navigate("/updateProfile");
+                      }}
+                      className="block w-full text-left px-4 py-2.5 text-gray-200 hover:bg-gray-700/50 hover:text-white transition-all duration-150 ease-in-out"
+                    >
+                      Update Profile
+                    </button>
+                    <button
+                      onClick={() => {
+                        setProfileMenuOpen(false);
+                        localStorage.removeItem("token");
+                        navigate("/");
+                      }}
+                      className="block w-full text-left px-4 py-2.5 text-red-400 hover:bg-gray-700/50 hover:text-red-500 transition-all duration-150 ease-in-out"
+                    >
+                      Log Out
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
-        </div>:<div>
-          <button onClick={()=>{navigate(`/messageSeller?recieverId=${sellerId}`)}} className="  sm:flex items-center  justify-center p-2 sm:mr-4 ml-8 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 transition-all duration-300 text-white shadow-lg hover:shadow-green-500/30">
-          <span className="hidden sm:flex pl-2 px-2 font-medium">{"Message Seller"}</span>
-          <span className="sm:hidden flex pl-2 px-2 font-medium">{"Message"}</span>
-          </button>
+          {/* Empty div for mobile on oneProduct page */}
+          {oneProduct && <div className="sm:hidden"></div>}
         </div>
-        }
       </div>
 
       {/* Mobile Profile Button - Visible Only on Small Screens */}

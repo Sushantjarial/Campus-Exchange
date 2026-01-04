@@ -1,166 +1,48 @@
-import { useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { BACKEND_URL } from "../../../config";
-import axios from "axios";
 import NavBarHome from "../components/nav-bar_home";
 
 export default function MessageSeller() {
-    const parms = new URLSearchParams(window.location.search);
-    const recieverId = parms.get("recieverId");
-    type Message = {
-        recieverId: string;
-        content: string;
-        id: number;
-        senderId: string;
-        createdAt: Date;
-    };
-    const bottomRef = useRef<HTMLDivElement>(null);
-    const scrollIntoView=()=>{ bottomRef.current?.scrollIntoView({
-        behavior:"smooth"
-    })
+  const navigate = useNavigate();
 
-}
+  return (
+    <div className="bg-slate-900 min-h-screen">
+      <NavBarHome messageSeller={true} />
+      <div className="flex flex-col items-center justify-center min-h-[80vh] px-4">
+        <div className="bg-gray-800/90 backdrop-blur-sm rounded-2xl p-8 max-w-md w-full text-center shadow-2xl border border-gray-700">
+          {/* Server Down Icon */}
+          <div className="mb-6">
+            <svg
+              className="w-20 h-20 mx-auto text-red-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+          </div>
 
+          {/* Message */}
+          <h1 className="text-2xl font-bold text-white mb-3">
+            Messaging Server Unavailable
+          </h1>
+          <p className="text-gray-400 mb-8">
+            Our messaging service is currently down. Please try again later.
+          </p>
 
-    const navigate = useNavigate();
-    const [messages, setMessages] = useState<Message[]>([]);
-    const contentref = useRef<HTMLInputElement>(null);
-
-    useEffect(()=>{
-        if(messages.length>0){
-    setTimeout(scrollIntoView,100)
-        }
-    },[messages.length])
-
-    const sendMessage = async () => {
-        const token = localStorage.getItem("token");
-        if (!contentref.current) {
-            toast.error("Please type a message");
-            return;
-        }
-        const content = contentref.current.value;
-        if (!token) {
-            toast.error("Please sign in to message the seller");
-            navigate("/signin");
-        }
-        try {
-            const res = await axios.post(
-                `${BACKEND_URL}/message/sendMessage`,
-                {
-                    recieverId,
-                    content,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
-            setMessages((prev) => [...prev, res.data.message]);
-            contentref.current.value = ""; 
-        } catch (e) {
-            console.log(e);
-            toast.error("Failed to send message");
-        }
-    };
-
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (!token) {
-            toast.error("Please sign in to message the seller");
-            navigate("/signin");
-        }
-        const fetchMessages = async () => {
-            try {
-                const res = await axios.get(
-                    `${BACKEND_URL}/message/getMessages?recieverId=${recieverId}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
-                setMessages(res.data.message);
-               
-
-
-            } catch (e) {
-                console.log(e);
-            }
-        };
-       
-       const intervalid= setInterval(()=>fetchMessages(),5000)
-
-
-        return(
-            () => {
-                clearInterval(intervalid);
-            }
-        )
-    }, []);
-
-    return (
-        <div className="bg-slate-900 h-screen ">
-       <NavBarHome messageSeller={true}></NavBarHome>
-        <div className="flex flex-col bg-slate-900 min-h-[90vh]">
-            <div className="flex-1  p-4">
-                <div className="space-y-4">
-                    {messages.map((message) => (
-                        <div
-                            key={message.id}
-                            className={`flex ${
-                                message.senderId === recieverId
-                                    ? "justify-start"
-                                    : "justify-end"
-                            }`}
-                        >
-                            <div
-                                className={`p-3 rounded-2xl max-w-xs shadow-md ${
-                                    message.senderId === recieverId
-                                        ? "bg-gray-300 text-black rounded-bl-none"
-                                        : "bg-blue-500 text-white rounded-br-none"
-                                }`}
-                            >
-                                <p className="text-sm">{message.content}</p>
-                                <span className="text-xs text-gray-500 block mt-1">
-                                    {new Date(message.createdAt).toLocaleTimeString([], {
-                                        hour: "2-digit",
-                                        minute: "2-digit",
-                                    })}
-                                </span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-           
-            <div className="p-4 bg-slate-900  flex items-center justify-center gap-3">
-                <input
-                onKeyDown={(e)=>{
-
-                    if(e.key==='Enter')
-                    {
-                        sendMessage()
-                    }
-                }}
-                    ref={contentref}
-                    type="text"
-                    placeholder="Type your message here"
-                    className="flex-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black-500"
-                />
-                <button
-                    onClick={sendMessage}
-                    className="p-3 bg-green-500 text-white rounded-lg hover:bg-green-600"
-                >
-                    Send
-                </button>
-            </div>
-            <div  ref={bottomRef} ></div>
-
- 
+          {/* Back Button */}
+          <button
+            onClick={() => navigate(-1)}
+            className="w-full py-3 px-6 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium rounded-xl transition-all duration-300 shadow-lg hover:shadow-blue-500/30"
+          >
+            Go Back
+          </button>
         </div>
- </div>
-    );
+      </div>
+    </div>
+  );
 }
